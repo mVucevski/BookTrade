@@ -1,0 +1,74 @@
+﻿
+@{
+    ViewBag.Title = "Register";
+}
+
+<head>
+    <style>
+        .boja {
+            height: 5px;
+            border-top: 0;
+            background: #c4e17f;
+            border-radius: 5px;
+            background-image: linear-gradient(to right, #c4e17f, #c4e17f 12%, #a24473 25%, #c4e17f 52%, #a24473 72%);
+        }
+    </style>
+</head>
+<body>
+    <div class="container my-5">
+        <div class="row my-3">
+            <div class="col-md-6 col-md-offset-2">
+                <form role="form">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <input type="text" class="form-control" placeholder="First Name">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input type="text" class="form-control" placeholder="Last Name">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <input type="text" class="form-control" placeholder="Display Name">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <input type="email" class="form-control" placeholder="E-Mail">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <input type="password" class="form-control" placeholder="Password">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input type="password" class="form-control" placeholder="Confirm Password">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <button type="button" class="btn btn-default">I Agree</button>
+                        </div>
+                        <div class="col-md-9" style="font-size:14px">
+                            By clicking <a href="#" class="btn btn-primary btn-sm py-0 px-1">Register</a>, you agree to the <a href="#" data-toggle="modal" data-target="#t_and_c_m">Terms and Conditions</a> set out by this site, including our Cookie Use.
+                        </div>
+                    </div>
+
+                    <hr class="boja">
+
+                    <div class="row my-3">
+                        <div class="col-md-6 form-group">
+                            <button type="button" class="btn btn-primary btn-block">Register</button>
+                        </div>
+                        <div class="col-md-6 form-group" style="font-size:14px">
+                            <button type="button" class="btn btn-success btn-block">Register</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
