@@ -6,33 +6,37 @@
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/fonts/css/font-awesome.min.css" rel="stylesheet" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar-light bg-light">
         <div class="container">
-            @Html.ActionLink("Book Store", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
-                        @Html.ActionLink("Home", "Index", "Home", new { area = "" }, new {@class = "nav-link" })
-                    </li>
-                    <li class="nav-item">
-                        @Html.ActionLink("API", "Index", "Help", new { area = "" }, new { @class = "nav-link" })
-                    </li>
-                    <li class="nav-item">
-                        @Html.ActionLink("Trade", "Index", "Home", new { area = "" }, new { @class = "nav-link" })
-                    </li>
-                    <li class="nav-item">
-                        @Html.ActionLink("Buy", "Index", "Home", new { area = "" }, new { @class = "nav-link" })
-                    </li>
-                    <li class="nav-item">
-                        @Html.ActionLink("Register/Login", "Index", "Home", new { area = "" }, new { @class = "nav-link" })
-                    </li>
-                </ul>
+            <div class="row vertical-align">
+                <div class="col-1">
+                    <img class="img" style="height: 70px" src="~/Content/Images/book.png" />
+                </div>
+                <div class="col-2">
+                    
+                    <a href="@Url.Action("Index", "Home", new { area = "" }, null)"><h2 class="Toptitle">Book<strong>Trade</strong></h2></a>
+                </div>
+
+
+
+                <div class="col-9">
+                    <form class="form-inline">
+                        <input class="form-control mr-sm-2" style="width:60%" type="search" placeholder="Search for books by keyword / title / author / ISBN" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        <i class="fa fa-heart pl-5 navIcons">
+                            <strong style="font-size:15px;display:flex;">Wishlist</strong>
+                        </i>
+                        <i class="fa fa-shopping-cart pl-4 navIcons">
+                            <strong style="font-size:15px;display:flex;">0 Items</strong>
+                        </i>
+                    </form>
+                </div>
             </div>
+
+
         </div>
     </nav>
     <div class="container body-content">
