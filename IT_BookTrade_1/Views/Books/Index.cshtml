@@ -4,72 +4,98 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-
 <p>
     @Html.ActionLink("Create New", "Create", new { }, new { @class="btn btn-default"})
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ImageURL)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Rating)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BookAuthor)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BookDescription)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Price)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Tradeable)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            <img height="128" src="@item.ImageURL"/>
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Rating)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BookAuthor)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BookDescription)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Price) $
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Tradeable)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class="btn btn-default" })
-            @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "btn btn-default" })
-            @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "btn btn-default" })
-        </td>
-    </tr>
-}
+<br />
 
-</table>
+<div class="container my-2">
+
+
+
+
+    <h3>Bestsellers</h3>
+
+    <div class="row my-3">
+        <div class="col-lg-2 col-md-4 mb-4">
+            <div class="card">
+                <img class="card-img-top card-img" src="~/Content/Images/startWhy.jpg" alt="">
+                <div class="card-body">
+                    <h4 class="card-title card-Title">Start With Why</h4>
+                    <p class="card-text">Simon Sinek</p>
+                    <p class="card-text card-price">$10</p>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="btn btn-success btn-block">Add to cart</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-4 mb-4">
+            <div class="card">
+                <img class="card-img-top card-img" src="~/Content/Images/startWhy.jpg" alt="">
+                <div class="card-body">
+                    <h4 class="card-title card-Title">Start With Why</h4>
+                    <p class="card-text">Simon Sinek</p>
+                    <p class="card-text card-price">$10</p>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="btn btn-success btn-block">Add to cart</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-4 mb-4">
+            <div class="card">
+                <img class="card-img-top card-img" src="~/Content/Images/startWhy.jpg" alt="">
+                <div class="card-body">
+                    <h4 class="card-title card-Title">Start With Why</h4>
+                    <p class="card-text">Simon Sinek</p>
+                    <p class="card-text card-price">$10</p>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="btn btn-success btn-block">Add to cart</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-4 mb-4">
+            <div class="card">
+                <img class="card-img-top card-img" src="~/Content/Images/startWhy.jpg" alt="">
+                <div class="card-body">
+                    <h4 class="card-title card-Title">Start With Why</h4>
+                    <p class="card-text">Simon Sinek</p>
+                    <p class="card-text card-price">$10</p>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="btn btn-success btn-block">Add to cart</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-4 mb-4">
+            <div class="card">
+                <img class="card-img-top card-img" src="~/Content/Images/startWhy.jpg" alt="">
+                <div class="card-body">
+                    <h4 class="card-title card-Title">Start With Why</h4>
+                    <p class="card-text">Simon Sinek</p>
+                    <p class="card-text card-price">$10</p>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="btn btn-success btn-block">Add to cart</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-4 mb-4">
+            <div class="card">
+                <img class="card-img-top card-img" src="~/Content/Images/startWhy.jpg" alt="">
+                <div class="card-body">
+                    <h4 class="card-title card-Title">Start With Why</h4>
+                    <p class="card-text">Simon Sinek</p>
+                    <p class="card-text card-price">$10</p>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="btn btn-success btn-block">Add to cart</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.row -->
+</div>
