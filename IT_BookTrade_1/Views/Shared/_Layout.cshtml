@@ -17,7 +17,7 @@
                 </div>
                 <div class="col-2">
                     
-                    <a href="@Url.Action("Index", "Home", new { area = "" }, null)"><h2 class="Toptitle">Book<strong>Trade</strong></h2></a>
+                    <a href="@Url.Action("Index", "Home", new { area = "" }, null)" style="text-decoration:none"><h2 class="Toptitle">Book<strong>Trade</strong></h2></a>
                 </div>
 
 
@@ -26,19 +26,77 @@
                     <form class="form-inline">
                         <input class="form-control mr-sm-2" style="width:60%" type="search" placeholder="Search for books by keyword / title / author / ISBN" aria-label="Search">
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                        <i class="fa fa-heart pl-5 navIcons">
-                            <strong style="font-size:15px;display:flex;">Wishlist</strong>
-                        </i>
-                        <i class="fa fa-shopping-cart pl-4 navIcons">
-                            <strong style="font-size:15px;display:flex;">0 Items</strong>
-                        </i>
+                        <div class="ml-auto">
+                            <i class="fa fa-heart pl-5 navIcons">
+                                <strong style="font-size:15px;display:flex;">Wishlist</strong>
+                            </i>
+                            <i class="fa fa-shopping-cart pl-4 navIcons">
+                                <strong style="font-size:15px;display:flex;">0 Items</strong>
+                            </i>
+                            </div>
                     </form>
                 </div>
             </div>
 
 
         </div>
+        <hr class="hrNav">
     </nav>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light my-0">
+        <div class="container">
+
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav" style="font-weight: bold;">
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">Bestsellers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="services.html">Coming Soon</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Highlights</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Trade Section</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Shop by category
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+                            <a class="dropdown-item" href="portfolio-1-col.html">1 Shop by category</a>
+                            <a class="dropdown-item" href="portfolio-2-col.html">2 Shop by category</a>
+                            <a class="dropdown-item" href="portfolio-3-col.html">3 Shop by category</a>
+                            <a class="dropdown-item" href="portfolio-4-col.html">4 Shop by category</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Other Pages
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
+                            <a class="dropdown-item" href="full-width.html">Full Width Page</a>
+                            <a class="dropdown-item" href="sidebar.html">Sidebar Page</a>
+                            <a class="dropdown-item" href="faq.html">FAQ</a>
+                            <a class="dropdown-item" href="404.html">404</a>
+                            <a class="dropdown-item" href="pricing.html">Pricing Table</a>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto" style="font-weight: bold;">
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Login/Register</a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+    <br />
     <div class="container body-content">
         @RenderBody()
         <hr />
