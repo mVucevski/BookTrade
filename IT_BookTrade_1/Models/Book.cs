@@ -27,6 +27,7 @@ namespace IT_BookTrade_1.Models
         public int Rating { get; set; }
 
         [Required]
+        [Range(0,double.MaxValue, ErrorMessage = "The value must be greater or equal to 0.")]
         public int Price { get; set; }
 
         [Required]

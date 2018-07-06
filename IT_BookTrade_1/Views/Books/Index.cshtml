@@ -12,22 +12,31 @@
         @foreach (var book in Model)
         {
             <div class="col-lg-2 col-md-4 mb-4">
-                <div class="card" onclick="location = 'Books/Details/@book.ID'">
-                    <img class="card-img-top card-img" src="@book.ImageURL" alt="">
-                    <div class="card-body">
-                        <h4 class="card-title card-Title">@book.Name</h4>
-                        <div class="card-text">@book.BookAuthor</div>
-                        <div>
-                            @for (int i = 0; i < book.Rating; ++i)
-                            {
-                                <img class="card-star" src="~/Content/Images/star.png" alt="">
-                            }
+                <div class="card">
+                    <div class="card add-pointer" onclick="location = 'Books/Details/@book.ID'">
+                        <img class="card-img-top card-img" src="@book.ImageURL" alt="">
+                        <div class="card-body">
+                            <h4 class="card-title card-Title">@book.Name</h4>
+                            <div class="card-text">@book.BookAuthor</div>
+                            <div>
+                                @for (int i = 0; i < book.Rating; ++i)
+                                {
+                                    <img class="card-star" src="~/Content/Images/star.png" alt="">
+                                }
+                            </div>
+                            <div class="card-text">Tradeable: @(book.Tradeable ? "Yes" : "No")</div>
+                            <div class="card-text card-price">$@book.Price</div>
                         </div>
-                        <div class="card-text">Tradeable: @(book.Tradeable ? "Yes" : "No")</div>
-                        <div class="card-text card-price">$@book.Price</div>
                     </div>
                     <div class="card-footer">
-                        @Html.ActionLink("Add to Cart", "Index", new { }, new { @class = "btn btn-success" })
+                        @if ((ViewBag.BookIDs as List<int>).Contains(book.ID))
+                        {
+                            <div class="btn btn-danger remove-pointer">Already in cart</div>
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Add to Cart", "AddToCart", new { id = book.ID }, new { @class = "btn btn-success" })
+                        }
                     </div>
                 </div>
             </div>
@@ -35,14 +44,3 @@
     </div>
     <!--BESTSELLERS-->
 </div>
-
-@section Scripts
-{
-<script>
-    $(document).ready(function () {
-        $(".card").hover(function () {
-            $(this).css({"cursor":"pointer"});
-        })
-    });
-</script>
-}
