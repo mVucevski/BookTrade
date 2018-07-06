@@ -22,6 +22,7 @@
                     <form class="form-inline">
                         <input class="form-control mr-sm-2" style="width:60%" type="search" placeholder="Search for books by keyword / title / author / ISBN" aria-label="Search">
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        @Html.ActionLink("Create", "Create", new { }, new { @class = "btn btn-outline-secondary my-2 my-sm-0" })
                         <div class="ml-auto">
                             <i class="fa fa-heart pl-5 navIcons">
                                 <strong style="font-size:15px;display:flex;">Wishlist</strong>
@@ -29,7 +30,7 @@
                             <i class="fa fa-shopping-cart pl-4 navIcons">
                                 <strong style="font-size:15px;display:flex;">0 Items</strong>
                             </i>
-                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -82,7 +83,8 @@
                 </ul>
                 <ul class="navbar-nav ml-auto" style="font-weight: bold;">
                     <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Login/Register</a>
+                        @Html.ActionLink("Login", "Index", new { }, new { @class = "btn btn-outline-secondary" })
+                        @Html.ActionLink("Register", "Index", new { }, new { @class = "btn btn-outline-secondary" })
                     </li>
                 </ul>
 

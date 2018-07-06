@@ -4,10 +4,8 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
-
 <div>
-    <h4>Book</h4>
+    <h4>Details</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -15,7 +13,9 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Name)
+            <div>
+                @Html.DisplayFor(model => model.Name)
+            </div>
         </dd>
 
         <dt>
@@ -23,7 +23,9 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.BookAuthor)
+            <div>
+                @Html.DisplayFor(model => model.BookAuthor)
+            </div>
         </dd>
 
         <dt>
@@ -31,7 +33,9 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.BookDescription)
+            <div>
+                @Html.DisplayFor(model => model.BookDescription)
+            </div>
         </dd>
 
         <dt>
@@ -39,7 +43,9 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Description)
+            <div>
+                @Html.DisplayFor(model => model.Description)
+            </div>
         </dd>
 
         <dt>
@@ -47,7 +53,9 @@
         </dt>
 
         <dd>
-            <img src="@Model.ImageURL"/>
+            <div>
+                <img src="@Model.ImageURL" />
+            </div>
         </dd>
 
         <dt>
@@ -68,7 +76,9 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Price)
+            <div class="card-text card-price">
+                $@Html.DisplayFor(model => model.Price)
+            </div>
         </dd>
 
         <dt>
@@ -76,12 +86,15 @@
         </dt>
 
         <dd>
-            <p>@(Model.Tradeable ? "Yes":"No")</p>
+            <div>
+                @(Model.Tradeable ? "Yes" : "No")
+            </div>
         </dd>
 
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<div>
+    @Html.ActionLink("Back", "Index", new { }, new { @class = "btn btn-outline-secondary" })
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class = "btn btn-outline-secondary" })
+    @Html.ActionLink("Add to Cart", "Index", new { }, new { @class = "btn btn-success" })
+</div>

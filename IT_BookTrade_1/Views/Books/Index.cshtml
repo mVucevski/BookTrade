@@ -4,20 +4,15 @@
     ViewBag.Title = "Index";
 }
 
-<p>
-    @Html.ActionLink("Create New", "Create", new { }, new { @class = "btn btn-default" })
-</p>
-
-<br />
-
 <div class="container my-2">
     <!--BESTSELLERS-->
     <h3>Bestsellers</h3>
+    <hr />
     <div id="bestsellers" class="row my-3">
         @foreach (var book in Model)
         {
             <div class="col-lg-2 col-md-4 mb-4">
-                <div class="card" onclick="location.href = 'Details/@book.ID'">
+                <div class="card" onclick="location = 'Books/Details/@book.ID'">
                     <img class="card-img-top card-img" src="@book.ImageURL" alt="">
                     <div class="card-body">
                         <h4 class="card-title card-Title">@book.Name</h4>
@@ -32,7 +27,7 @@
                         <div class="card-text card-price">$@book.Price</div>
                     </div>
                     <div class="card-footer">
-                        <a href="#" class="btn btn-success btn-block">Add to cart</a>
+                        @Html.ActionLink("Add to Cart", "Index", new { }, new { @class = "btn btn-success" })
                     </div>
                 </div>
             </div>
