@@ -5,7 +5,7 @@
 }
 
 <p>
-    @Html.ActionLink("Create New", "Create", new { }, new { @class="btn btn-default"})
+    @Html.ActionLink("Create New", "Create", new { }, new { @class = "btn btn-default" })
 </p>
 
 <br />
@@ -13,11 +13,11 @@
 <div class="container my-2">
     <!--BESTSELLERS-->
     <h3>Bestsellers</h3>
-    <div class="row my-3">
+    <div id="bestsellers" class="row my-3">
         @foreach (var book in Model)
         {
             <div class="col-lg-2 col-md-4 mb-4">
-                <div class="card">
+                <div class="card" onclick="location.href = 'Details/@book.ID'">
                     <img class="card-img-top card-img" src="@book.ImageURL" alt="">
                     <div class="card-body">
                         <h4 class="card-title card-Title">@book.Name</h4>
@@ -28,7 +28,7 @@
                                 <img class="card-star" src="~/Content/Images/star.png" alt="">
                             }
                         </div>
-                        <div class="card-text">Tradeable: @(book.Tradeable ? "Yes":"No")</div>
+                        <div class="card-text">Tradeable: @(book.Tradeable ? "Yes" : "No")</div>
                         <div class="card-text card-price">$@book.Price</div>
                     </div>
                     <div class="card-footer">
@@ -40,3 +40,14 @@
     </div>
     <!--BESTSELLERS-->
 </div>
+
+@section Scripts
+{
+<script>
+    $(document).ready(function () {
+        $(".card").hover(function () {
+            $(this).css({"cursor":"pointer"});
+        })
+    });
+</script>
+}

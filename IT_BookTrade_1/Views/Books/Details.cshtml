@@ -19,11 +19,35 @@
         </dd>
 
         <dt>
+            @Html.DisplayNameFor(model => model.BookAuthor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BookAuthor)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BookDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BookDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.ImageURL)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ImageURL)
+            <img src="@Model.ImageURL"/>
         </dd>
 
         <dt>
@@ -31,7 +55,28 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Rating)
+            <div>
+                @for (int i = 0; i < Model.Rating; ++i)
+                {
+                    <img class="card-star" src="~/Content/Images/star.png" alt="">
+                }
+            </div>
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tradeable)
+        </dt>
+
+        <dd>
+            <p>@(Model.Tradeable ? "Yes":"No")</p>
         </dd>
 
     </dl>
