@@ -45,3 +45,8 @@
 .card-Title{
     font-size: 15px;
 }
+
+.card-star{
+    width: 7px;
+    height: 7px;
+}

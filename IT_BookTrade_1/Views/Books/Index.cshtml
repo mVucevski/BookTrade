@@ -11,91 +11,32 @@
 <br />
 
 <div class="container my-2">
-
-
-
-
+    <!--BESTSELLERS-->
     <h3>Bestsellers</h3>
-
     <div class="row my-3">
-        <div class="col-lg-2 col-md-4 mb-4">
-            <div class="card">
-                <img class="card-img-top card-img" src="~/Content/Images/startWhy.jpg" alt="">
-                <div class="card-body">
-                    <h4 class="card-title card-Title">Start With Why</h4>
-                    <p class="card-text">Simon Sinek</p>
-                    <p class="card-text card-price">$10</p>
-                </div>
-                <div class="card-footer">
-                    <a href="#" class="btn btn-success btn-block">Add to cart</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-2 col-md-4 mb-4">
-            <div class="card">
-                <img class="card-img-top card-img" src="~/Content/Images/startWhy.jpg" alt="">
-                <div class="card-body">
-                    <h4 class="card-title card-Title">Start With Why</h4>
-                    <p class="card-text">Simon Sinek</p>
-                    <p class="card-text card-price">$10</p>
-                </div>
-                <div class="card-footer">
-                    <a href="#" class="btn btn-success btn-block">Add to cart</a>
+        @foreach (var book in Model)
+        {
+            <div class="col-lg-2 col-md-4 mb-4">
+                <div class="card">
+                    <img class="card-img-top card-img" src="@book.ImageURL" alt="">
+                    <div class="card-body">
+                        <h4 class="card-title card-Title">@book.Name</h4>
+                        <div class="card-text">@book.BookAuthor</div>
+                        <div>
+                            @for (int i = 0; i < book.Rating; ++i)
+                            {
+                                <img class="card-star" src="~/Content/Images/star.png" alt="">
+                            }
+                        </div>
+                        <div class="card-text">Tradeable: @(book.Tradeable ? "Yes":"No")</div>
+                        <div class="card-text card-price">$@book.Price</div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="btn btn-success btn-block">Add to cart</a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-2 col-md-4 mb-4">
-            <div class="card">
-                <img class="card-img-top card-img" src="~/Content/Images/startWhy.jpg" alt="">
-                <div class="card-body">
-                    <h4 class="card-title card-Title">Start With Why</h4>
-                    <p class="card-text">Simon Sinek</p>
-                    <p class="card-text card-price">$10</p>
-                </div>
-                <div class="card-footer">
-                    <a href="#" class="btn btn-success btn-block">Add to cart</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-2 col-md-4 mb-4">
-            <div class="card">
-                <img class="card-img-top card-img" src="~/Content/Images/startWhy.jpg" alt="">
-                <div class="card-body">
-                    <h4 class="card-title card-Title">Start With Why</h4>
-                    <p class="card-text">Simon Sinek</p>
-                    <p class="card-text card-price">$10</p>
-                </div>
-                <div class="card-footer">
-                    <a href="#" class="btn btn-success btn-block">Add to cart</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-2 col-md-4 mb-4">
-            <div class="card">
-                <img class="card-img-top card-img" src="~/Content/Images/startWhy.jpg" alt="">
-                <div class="card-body">
-                    <h4 class="card-title card-Title">Start With Why</h4>
-                    <p class="card-text">Simon Sinek</p>
-                    <p class="card-text card-price">$10</p>
-                </div>
-                <div class="card-footer">
-                    <a href="#" class="btn btn-success btn-block">Add to cart</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-2 col-md-4 mb-4">
-            <div class="card">
-                <img class="card-img-top card-img" src="~/Content/Images/startWhy.jpg" alt="">
-                <div class="card-body">
-                    <h4 class="card-title card-Title">Start With Why</h4>
-                    <p class="card-text">Simon Sinek</p>
-                    <p class="card-text card-price">$10</p>
-                </div>
-                <div class="card-footer">
-                    <a href="#" class="btn btn-success btn-block">Add to cart</a>
-                </div>
-            </div>
-        </div>
+        }
     </div>
-    <!-- /.row -->
+    <!--BESTSELLERS-->
 </div>
