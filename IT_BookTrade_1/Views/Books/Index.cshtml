@@ -11,12 +11,23 @@
     <div id="bestsellers" class="row my-3">
         @foreach (var book in Model)
         {
-            <div class="col-lg-2 col-md-4 mb-4">
-                <div class="card">
+            <div class="col-lg-2 col-md-4 mb-4 d-flex align-items-stretch">
+                <div class="card h-100">
                     <div class="card add-pointer" onclick="location = 'Books/Details/@book.ID'">
                         <img class="card-img-top card-img" src="@book.ImageURL" alt="">
-                        <div class="card-body">
-                            <h4 class="card-title card-Title">@book.Name</h4>
+                        <div class="card-body h-100">
+                            <div class="card-title">
+                            @if (@book.Name.Length > 17)
+                            {
+                                <div class="card-Title">@book.Name.Substring(0, 14)</div>
+                                <div class="card-Title">@book.Name.Substring(14)</div>
+                            }
+                            else
+                            {
+                                <div class="card-Title">@book.Name</div>
+                                <br>
+                            }
+                            </div>
                             <div class="card-text">@book.BookAuthor</div>
                             <div>
                                 @for (int i = 0; i < book.Rating; ++i)

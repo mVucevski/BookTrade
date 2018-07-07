@@ -22,7 +22,7 @@ namespace IT_BookTrade_1.Controllers
             {
                 bookIDs.Add(book.ID);
             }
-            ViewBag.BookIDs = bookIDs;
+            ViewBag.BookIDs = bookIDs;          
         }
 
         public ActionResult ShoppingCart()
