@@ -35,8 +35,8 @@
     font-weight: bold;
 }
 .card-img{
-    height: 40%;
-    width: 60%;
+    height: 124px;
+    width: 106px;
     text-align: right;
     margin-left: auto;
     margin-right: auto;
@@ -44,6 +44,10 @@
 }
 .card-Title{
     font-size: 15px;
+    white-space: nowrap; 
+    overflow: hidden;
+   	text-overflow: ellipsis;
+    font-weight: bold;
 }
 
 .card-star{
