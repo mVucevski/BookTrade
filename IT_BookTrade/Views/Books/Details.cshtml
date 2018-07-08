@@ -1,0 +1,105 @@
+﻿@model IT_BookTrade.Models.Book
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div>
+    <h4>@Html.DisplayFor(model => model.Title)</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            <div>
+                @Html.DisplayFor(model => model.Title)
+            </div>
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BookAuthor)
+        </dt>
+
+        <dd>
+            <div>
+                @Html.DisplayFor(model => model.BookAuthor)
+            </div>
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BookDescription)
+        </dt>
+
+        <dd>
+            <div>
+                @Html.DisplayFor(model => model.BookDescription)
+            </div>
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            <div>
+                @Html.DisplayFor(model => model.Description)
+            </div>
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ImageURL)
+        </dt>
+
+        <dd>
+            <div>
+                <img src="@Model.ImageURL" />
+            </div>
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Rating)
+        </dt>
+
+        <dd>
+            <div>
+                <div class="star-ratings-sprite"><span style="width:@(Model.Rating*20)%" class="star-ratings-sprite-rating"></span></div>
+                <span>@Html.DisplayFor(model => model.Rating)/5</span>
+            </div>
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            <div class="card-text card-price">
+                $@Html.DisplayFor(model => model.Price)
+            </div>
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tradeable)
+        </dt>
+
+        <dd>
+            <div>
+                @(Model.Tradeable ? "Yes" : "No")
+            </div>
+        </dd>
+
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Back", "Index", new { }, new { @class = "btn btn-outline-secondary" })
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class = "btn btn-outline-secondary" })
+    @if ((ViewBag.BookIDs as List<int>).Contains( Model.ID))
+    {
+        <div class="btn btn-danger">Already in cart</div>
+    }
+    else
+    {
+        @Html.ActionLink("Add to Cart", "AddToCart", new { id = Model.ID }, new { @class = "btn btn-success" })
+    }
+</div>
