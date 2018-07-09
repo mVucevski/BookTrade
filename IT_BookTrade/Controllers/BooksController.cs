@@ -208,6 +208,13 @@ namespace IT_BookTrade.Controllers
             return RedirectToAction("Index");
         }
 
+        // GET: Checkout
+        public ActionResult CheckOut()
+        {
+            
+            return View();
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
