@@ -104,6 +104,7 @@ namespace IT_BookTrade.Controllers
         {
             AddBooksToBag();
             ViewBag.TotalBooksInCart = shoppingCart.Count;
+            //  return View(db.Books.ToList());
             return View(db.Books.ToList());
         }
 
