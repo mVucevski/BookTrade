@@ -56,6 +56,16 @@
     font-weight: bold;
 }
 
+.card-Author {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    max-height: 50px;
+    height: 50px;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
 .star-ratings-sprite {
     background: url("Images/star.png") repeat-x;
     width: 110px;

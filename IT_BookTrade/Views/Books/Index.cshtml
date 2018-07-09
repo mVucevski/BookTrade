@@ -17,7 +17,7 @@
                         <img class="card-img-top card-img" src="@book.ImageURL" alt="">
                         <div class="card-body h-100">
                             <div class="card-title card-Title">@book.Title</div>
-                            <div class="card-text">@book.BookAuthor</div>
+                            <div class="card-text card-Author">@book.BookAuthor</div>
                             <div class="star-ratings-sprite"><span style="width:@(book.Rating*20)%" class="star-ratings-sprite-rating"></span></div>
                             <div class="card-text">Tradeable: @(book.Tradeable ? "Yes" : "No")</div>
                             <div class="card-text card-price">$@book.Price</div>
