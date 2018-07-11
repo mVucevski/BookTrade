@@ -210,10 +210,10 @@ namespace IT_BookTrade.Controllers
         }
 
         // GET: Checkout
-        public ActionResult CheckOut()
+        public ActionResult CheckOut(double total)
         {
             
-            return View();
+            return View(total);
         }
 
         protected override void Dispose(bool disposing)

@@ -201,7 +201,6 @@ UpgradeLog*.htm
 
 # SQL Server files
 
-
 # Business Intelligence projects
 *.rdl.data
 *.bim.layout

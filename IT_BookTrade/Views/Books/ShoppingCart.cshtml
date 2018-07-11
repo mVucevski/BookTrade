@@ -72,7 +72,7 @@
 </table>
 <div>
     @Html.ActionLink("Back", "Index", new { }, new { @class = "btn btn-outline-secondary" })
-    @Html.ActionLink("Checkout", "Index", new { }, new { @class = "btn btn-outline-success" })
+    @Html.ActionLink("Checkout", "CheckOut", new { total = @ViewBag.TotalCostOfCart }, new { @class = "btn btn-outline-success" })
     <div class="card-text card-price">Total: $@ViewBag.TotalCostOfCart</div>
 </div>
     
