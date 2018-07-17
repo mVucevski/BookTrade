@@ -227,6 +227,10 @@
     <Compile Include="Migrations\201807081433165_myMigration11.Designer.cs">
       <DependentUpon>201807081433165_myMigration11.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201807171936128_ISBN Add.cs" />
+    <Compile Include="Migrations\201807171936128_ISBN Add.Designer.cs">
+      <DependentUpon>201807171936128_ISBN Add.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Book.cs" />
@@ -372,6 +376,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201807081433165_myMigration11.resx">
       <DependentUpon>201807081433165_myMigration11.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807171936128_ISBN Add.resx">
+      <DependentUpon>201807171936128_ISBN Add.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

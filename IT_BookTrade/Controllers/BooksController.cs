@@ -138,7 +138,7 @@ namespace IT_BookTrade.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Title,ImageURL,Rating,BookAuthor,BookDescription,Description,Price,Tradeable")] Book book)
+        public ActionResult Create([Bind(Include = "ID,Title,ImageURL,Rating,BookAuthor,BookDescription,Description,Price,Tradeable,ISBN")] Book book)
         {
             if (ModelState.IsValid)
             {
@@ -172,7 +172,7 @@ namespace IT_BookTrade.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Title,ImageURL,Rating,BookAuthor,BookDescription,Description,Price,Tradeable")] Book book)
+        public ActionResult Edit([Bind(Include = "ID,Title,ImageURL,Rating,BookAuthor,BookDescription,Description,Price,Tradeable,ISBN")] Book book)
         {
             if (ModelState.IsValid)
             {
