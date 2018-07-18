@@ -19,9 +19,9 @@
                     <a href="@Url.Action("Index", "Home", new { area = "" }, null)" style="text-decoration:none"><h2 class="Toptitle">Book<strong>Trade</strong></h2></a>
                 </div>
                 <div class="col-9">
-                    <form class="form-inline">
-                        <input class="form-control mr-sm-2" style="width:60%" type="search" placeholder="Search for books by keyword / title / author / ISBN" aria-label="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    <form class="form-inline" action="~/Books/Search" method="get">
+                        <input class="form-control mr-sm-2" style="width:60%" type="search" name="search" id="search" placeholder="Search for books by keyword / title / author / ISBN" aria-label="Search">
+                        <button href="href="@Url.Action("Search", "Books", new { search = "" }, null)" style="text-decoration:none"" class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Search">Search</button>
                         @Html.ActionLink("Create", "Create", new { }, new { @class = "btn btn-outline-secondary my-2 my-sm-0" })
                         <div class="ml-auto">
                             <i class="fa fa-heart pl-5 navIcons add-pointer">

@@ -1,0 +1,53 @@
+﻿@model IEnumerable<IT_BookTrade.Models.Book>
+
+@{
+    ViewBag.Title = "Search";
+}
+
+<h2>Search</h2>
+
+<div class="container my-2">
+
+
+        @{    
+            var mod = Model;
+           // mod = Model.Where(x => x.Tradeable);
+
+
+        <hr />
+        <div id="bestsellers" class="row my-3">
+            @foreach (var book in mod)
+            {
+                <div class="col-lg-2 col-md-4 mb-4 d-flex align-items-stretch">
+                    <div class="card h-100">
+                        <div class="card add-pointer" onclick="location = 'Books/Details/@book.ID'">
+                            <img class="card-img-top card-img" src="@book.ImageURL" alt="">
+                            <div class="card-body h-100">
+                                <div class="card-title card-Title">@book.Title</div>
+                                <div class="card-text card-Author">@book.BookAuthor</div>
+                                <div class="star-ratings-sprite"><span style="width:@(book.Rating * 20)%" class="star-ratings-sprite-rating"></span></div>
+                                <div class="card-text">Tradeable: @(book.Tradeable ? "Yes" : "No")</div>
+                                <div class="card-text card-price">$@book.Price</div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            @if ((ViewBag.BookIDs as List<int>).Contains(book.ID))
+                            {
+                                @Html.ActionLink("In Cart", "RemoveFromCartIndex", new { id = book.ID }, new { @class = "btn btn-danger btn-block" })
+                            }
+                            else
+                            {
+                                @Html.ActionLink("Add to Cart", "AddToCart", new { id = book.ID }, new { @class = "btn btn-success btn-block" })
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+  
+
+            }
+
+
+
+</div>

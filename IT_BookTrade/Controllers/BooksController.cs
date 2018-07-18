@@ -100,12 +100,37 @@ namespace IT_BookTrade.Controllers
         }
 
         // GET: Books
-        public ActionResult Index()
+        public ActionResult Index(string searchString)
         {
             AddBooksToBag();
             ViewBag.TotalBooksInCart = shoppingCart.Count;
-            //  return View(db.Books.ToList());
+            
             return View(db.Books.ToList());
+        }
+
+        // GET: Books/Search
+        public ActionResult Search(string search)
+        {
+            AddBooksToBag();
+            ViewBag.TotalBooksInCart = shoppingCart.Count;
+
+            var tmpBooks = db.Books.ToList();
+            var books = new List<Book>();
+
+            if (!String.IsNullOrEmpty(search))
+            {
+                books.AddRange(tmpBooks.Where(s => s.Title.ToLower().Contains(search.ToLower())).ToList());
+                //Exception dava za ISBN bidejki nekoi knigi imaat null vrednost, treba da dodelime nekoja default vrednost na tie shto nemaat ISBN
+                // books.AddRange(tmpBooks.Where(s => s.ISBN.Equals(search)).ToList());
+                books.AddRange(tmpBooks.Where(s => s.BookAuthor.ToLower().Contains(search.ToLower())).ToList());
+                books.Distinct();
+            }
+            else
+            {
+                books = db.Books.ToList();
+            }
+
+            return View(books);
         }
 
         // GET: Books/Details/5
@@ -166,6 +191,7 @@ namespace IT_BookTrade.Controllers
             ViewBag.TotalBooksInCart = shoppingCart.Count;
             return View(book);
         }
+
 
         // POST: Books/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
