@@ -100,7 +100,7 @@ namespace IT_BookTrade.Controllers
         }
 
         // GET: Books
-        public ActionResult Index(string searchString)
+        public ActionResult Index()
         {
             AddBooksToBag();
             ViewBag.TotalBooksInCart = shoppingCart.Count;
@@ -119,9 +119,8 @@ namespace IT_BookTrade.Controllers
 
             if (!String.IsNullOrEmpty(search))
             {
-                books.AddRange(tmpBooks.Where(s => s.Title.ToLower().Contains(search.ToLower())).ToList());
-                //Exception dava za ISBN bidejki nekoi knigi imaat null vrednost, treba da dodelime nekoja default vrednost na tie shto nemaat ISBN
-                // books.AddRange(tmpBooks.Where(s => s.ISBN.Equals(search)).ToList());
+                books.AddRange(tmpBooks.Where(s => s.Title.ToLower().Contains(search.ToLower())).ToList());              
+                books.AddRange(tmpBooks.Where(s => s.ISBN != null && s.ISBN.Equals(search)).ToList());
                 books.AddRange(tmpBooks.Where(s => s.BookAuthor.ToLower().Contains(search.ToLower())).ToList());
                 books.Distinct();
             }
@@ -240,6 +239,12 @@ namespace IT_BookTrade.Controllers
         {
             
             return View(total);
+        }
+
+        // GET: OrderSummary
+        public ActionResult OrderSummary()
+        {
+            return View();
         }
 
         protected override void Dispose(bool disposing)
