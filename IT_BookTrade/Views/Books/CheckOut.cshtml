@@ -2,7 +2,6 @@
         Layout = "~/Views/Shared/_Layout.cshtml";
     }
 
-
     <div class="container">
         <div class="row">
             <div class="col-md-4">
@@ -73,14 +72,14 @@
                     <div class='row mt-3'>
                         <div class='col-md-12'>
                             <div class='form-control btn btn-success'>
-                                <p class="rounded boja">Total: $@Model</p>
+                                <p class="rounded boja">Total: $@ViewBag.TotalCostOfCart</p>
                             </div>
                         </div>
                     </div>
                     <br>
                     <div class='row'>
                         <div class='col-md-12 form-group'>
-                            <button class='form-control btn btn-primary submit-button' type='submit'>Pay</button>
+                            @Html.ActionLink("Pay", "OrderSummary", new {}, new { @class = "form-control btn btn-primary submit-button" })
                         </div>
                     </div>
                 </form>

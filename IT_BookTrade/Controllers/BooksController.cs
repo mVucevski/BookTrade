@@ -39,20 +39,25 @@ namespace IT_BookTrade.Controllers
             }
         }
 
-        //GET: Shopping Cart
-        public ActionResult ShoppingCart()
+        private double TotalCostOfCart()
         {
-            ViewBag.TotalBooksInCart = shoppingCart.Count;
             double totalCost = 0;
             foreach (Book book in shoppingCart)
             {
                 totalCost += book.Price;
             }
-            ViewBag.TotalCostOfCart = totalCost;
+            return totalCost;
+        }
+
+        //GET: Shopping Cart
+        public ActionResult ShoppingCart()
+        {
+            ViewBag.TotalBooksInCart = shoppingCart.Count;
+            ViewBag.TotalCostOfCart = TotalCostOfCart();
             return View(shoppingCart);
         }
 
-        //Add to cart
+        //Add to cart (If on index page)
         public ActionResult AddToCart(int? id)
         {
             if (id == null)
@@ -66,6 +71,22 @@ namespace IT_BookTrade.Controllers
             }
             shoppingCart.Add(book);
             return RedirectToAction("Index");
+        }
+
+        //Add to cart (If on details page)
+        public ActionResult AddToCartDetails(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Book book = db.Books.Find(id);
+            if (book == null)
+            {
+                return HttpNotFound();
+            }
+            shoppingCart.Add(book);
+            return RedirectToAction("Details", new { id });
         }
 
         //Remove from cart (If on shopping cart page)
@@ -90,6 +111,18 @@ namespace IT_BookTrade.Controllers
             RemoveBookFromCart((int)id);
 
             return RedirectToAction("Index");
+        }
+
+        //Remove from cart (If on details page)
+        public ActionResult RemoveFromCartDetails(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            RemoveBookFromCart((int)id);
+
+            return RedirectToAction("Details", new { id });
         }
 
         //Clear cart
@@ -235,16 +268,17 @@ namespace IT_BookTrade.Controllers
         }
 
         // GET: Checkout
-        public ActionResult CheckOut(double total)
+        public ActionResult CheckOut()
         {
-            
-            return View(total);
+            ViewBag.TotalCostOfCart = TotalCostOfCart();
+            return View();
         }
 
         // GET: OrderSummary
         public ActionResult OrderSummary()
         {
-            return View();
+            ViewBag.TotalCostOfCart = TotalCostOfCart();
+            return View(shoppingCart);
         }
 
         protected override void Dispose(bool disposing)
