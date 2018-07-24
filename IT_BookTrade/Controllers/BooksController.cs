@@ -270,6 +270,7 @@ namespace IT_BookTrade.Controllers
         // GET: Checkout
         public ActionResult CheckOut()
         {
+            ViewBag.TotalBooksInCart = shoppingCart.Count;
             ViewBag.TotalCostOfCart = TotalCostOfCart();
             return View();
         }
@@ -277,8 +278,15 @@ namespace IT_BookTrade.Controllers
         // GET: OrderSummary
         public ActionResult OrderSummary()
         {
+            List<Book> books = new List<Book>();
+            foreach(Book book in shoppingCart)
+            {
+                books.Add(book);
+            }
+            ClearShoppingCart();
+            ViewBag.TotalBooksInCart = shoppingCart.Count();
             ViewBag.TotalCostOfCart = TotalCostOfCart();
-            return View(shoppingCart);
+            return View(books);
         }
 
         protected override void Dispose(bool disposing)
