@@ -231,6 +231,30 @@
     <Compile Include="Migrations\201807171936128_ISBN Add.Designer.cs">
       <DependentUpon>201807171936128_ISBN Add.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201807262119350_addLastLogin.cs" />
+    <Compile Include="Migrations\201807262119350_addLastLogin.Designer.cs">
+      <DependentUpon>201807262119350_addLastLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807262332530_addLastLogin2.cs" />
+    <Compile Include="Migrations\201807262332530_addLastLogin2.Designer.cs">
+      <DependentUpon>201807262332530_addLastLogin2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807262335094_addLastLogin3.cs" />
+    <Compile Include="Migrations\201807262335094_addLastLogin3.Designer.cs">
+      <DependentUpon>201807262335094_addLastLogin3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807271544066_first_lastName.cs" />
+    <Compile Include="Migrations\201807271544066_first_lastName.Designer.cs">
+      <DependentUpon>201807271544066_first_lastName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807271559569_firstlastNamee.cs" />
+    <Compile Include="Migrations\201807271559569_firstlastNamee.Designer.cs">
+      <DependentUpon>201807271559569_firstlastNamee.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807271605184_shippingAdress.cs" />
+    <Compile Include="Migrations\201807271605184_shippingAdress.Designer.cs">
+      <DependentUpon>201807271605184_shippingAdress.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Book.cs" />
@@ -381,6 +405,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201807171936128_ISBN Add.resx">
       <DependentUpon>201807171936128_ISBN Add.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807262119350_addLastLogin.resx">
+      <DependentUpon>201807262119350_addLastLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807262332530_addLastLogin2.resx">
+      <DependentUpon>201807262332530_addLastLogin2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807262335094_addLastLogin3.resx">
+      <DependentUpon>201807262335094_addLastLogin3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807271544066_first_lastName.resx">
+      <DependentUpon>201807271544066_first_lastName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807271559569_firstlastNamee.resx">
+      <DependentUpon>201807271559569_firstlastNamee.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807271605184_shippingAdress.resx">
+      <DependentUpon>201807271605184_shippingAdress.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

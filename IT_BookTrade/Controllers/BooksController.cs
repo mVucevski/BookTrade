@@ -279,13 +279,13 @@ namespace IT_BookTrade.Controllers
         public ActionResult OrderSummary()
         {
             List<Book> books = new List<Book>();
-            foreach(Book book in shoppingCart)
+            foreach (Book book in shoppingCart)
             {
                 books.Add(book);
             }
+            ViewBag.TotalCostOfCart = TotalCostOfCart();
             ClearShoppingCart();
             ViewBag.TotalBooksInCart = shoppingCart.Count();
-            ViewBag.TotalCostOfCart = TotalCostOfCart();
             return View(books);
         }
 

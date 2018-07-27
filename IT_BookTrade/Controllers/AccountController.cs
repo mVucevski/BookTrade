@@ -75,11 +75,51 @@ namespace IT_BookTrade.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
+            var user = await UserManager.FindAsync(model.Email, model.Password);
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
-                    //return RedirectToLocal(returnUrl);
+                    /* var db = new ApplicationDbContext();
+                     user.lastLogin = DateTime.Now;
+                     Console.WriteLine("Date NOW: "+DateTime.Now);
+                     Console.WriteLine(user.lastLogin);
+                     System.Diagnostics.Debug.WriteLine(user.lastLogin);
+                     System.Diagnostics.Debug.WriteLine("Date NOW: " + DateTime.Now);
+                     user.PhoneNumber = "3123123";
+                     await UserManager.UpdateAsync(user);
+                     db.SaveChanges();
+
+                     var user2 = await UserManager.FindAsync(model.Email, model.Password);
+
+                     System.Diagnostics.Debug.WriteLine("User2: "+user2.lastLogin);
+                     //-------------------------------
+
+                     using (ApplicationDbContext dbCtx = new ApplicationDbContext())
+                     {
+                         // use the same context for the UserManager
+
+                         // user to update
+                         var user3 = dbCtx.Users
+                             .ToList()
+                             .First(u => u.Id == user.Id);
+
+                         // movie to update
+                         user3.PhoneNumber = "4444444";
+                         user3.lastLogin = DateTime.Now;
+
+                         dbCtx.SaveChanges();
+                         // this is should do the trick
+                        // UserManager.Update(user3);
+                         System.Diagnostics.Debug.WriteLine("User3: " + user3.lastLogin);
+                     }
+
+                     // 000-------------------
+                     //return RedirectToLocal(returnUrl); */
+
+
+                    user.lastLogin = DateTime.Now;
+                    await UserManager.UpdateAsync(user);
                     return RedirectToLocal("~/Books/Index");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -152,7 +192,7 @@ namespace IT_BookTrade.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, shippingAddress = model.shippingAddress };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

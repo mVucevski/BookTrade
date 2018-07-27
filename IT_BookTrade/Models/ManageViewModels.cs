@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
+using System;
 
 namespace IT_BookTrade.Models
 {
@@ -12,6 +13,7 @@ namespace IT_BookTrade.Models
         public string PhoneNumber { get; set; }
         public bool TwoFactor { get; set; }
         public bool BrowserRemembered { get; set; }
+        public DateTime? lastLogin { get; set; }
     }
 
     public class ManageLoginsViewModel
