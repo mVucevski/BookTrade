@@ -89,6 +89,35 @@ namespace IT_BookTrade.Controllers
             return RedirectToAction("Details", new { id });
         }
 
+        //Add to wishlist (If on details page)
+        [Authorize]
+        public ActionResult AddToWishlistDetails(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Book book = db.Books.Find(id);
+            if (book == null)
+            {
+                return HttpNotFound();
+            }
+
+            var wishlistItem = db.Wishlist.Where(x => x.UserEmail.Equals(User.Identity.Name) && x.Book.ID == id).FirstOrDefault();
+
+            if (wishlistItem == null)
+            {
+                db.Wishlist.Add(new WishlistItem() {
+                    DateAdded = DateTime.Now,
+                    Book = book,
+                    UserEmail = User.Identity.Name
+                });
+                db.SaveChanges();
+            }
+    
+            return RedirectToAction("Details", new { id });
+        }
+
         //Remove from cart (If on shopping cart page)
         public ActionResult RemoveFromCart(int? id)
         {

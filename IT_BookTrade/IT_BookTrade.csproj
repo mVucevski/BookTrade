@@ -46,6 +46,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -124,12 +132,6 @@
     </Reference>
     <Reference Include="System.Web.Http.WebHost">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.4\lib\net45\System.Web.Http.WebHost.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
@@ -212,6 +214,7 @@
     <Compile Include="Controllers\BooksController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\WishlistController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -255,12 +258,26 @@
     <Compile Include="Migrations\201807271605184_shippingAdress.Designer.cs">
       <DependentUpon>201807271605184_shippingAdress.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808011832415_add_Wishlist.cs" />
+    <Compile Include="Migrations\201808011832415_add_Wishlist.Designer.cs">
+      <DependentUpon>201808011832415_add_Wishlist.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808011839494_add_Wishlist2.cs" />
+    <Compile Include="Migrations\201808011839494_add_Wishlist2.Designer.cs">
+      <DependentUpon>201808011839494_add_Wishlist2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808011911367_add_Wishlist3.cs" />
+    <Compile Include="Migrations\201808011911367_add_Wishlist3.Designer.cs">
+      <DependentUpon>201808011911367_add_Wishlist3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\BookContext.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Wishlist.cs" />
+    <Compile Include="Models\WishlistItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -380,6 +397,7 @@
     <Content Include="Views\Books\CheckOut.cshtml" />
     <Content Include="Views\Books\Search.cshtml" />
     <Content Include="Views\Books\OrderSummary.cshtml" />
+    <Content Include="Views\Wishlist\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -423,6 +441,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201807271605184_shippingAdress.resx">
       <DependentUpon>201807271605184_shippingAdress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808011832415_add_Wishlist.resx">
+      <DependentUpon>201808011832415_add_Wishlist.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808011839494_add_Wishlist2.resx">
+      <DependentUpon>201808011839494_add_Wishlist2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808011911367_add_Wishlist3.resx">
+      <DependentUpon>201808011911367_add_Wishlist3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

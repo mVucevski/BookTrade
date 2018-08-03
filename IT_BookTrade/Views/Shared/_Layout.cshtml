@@ -24,7 +24,7 @@
                         <button href="href="@Url.Action("Search", "Books", new { search = "" }, null)" style="text-decoration:none"" class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Search">Search</button>
                         @Html.ActionLink("Create", "Create", new { }, new { @class = "btn btn-outline-secondary my-2 my-sm-0" })
                         <div class="ml-auto">
-                            <i class="fa fa-heart pl-5 navIcons add-pointer">
+                            <i class="fa fa-heart pl-5 navIcons add-pointer" onclick="location.href='@Url.Action("Index", "Wishlist")'">
                                 <strong style="font-size:15px;display:flex;">Wishlist</strong>
                             </i>
                             <i class="fa fa-shopping-cart pl-4 navIcons add-pointer" onclick="location = 'Books/ShoppingCart'">
