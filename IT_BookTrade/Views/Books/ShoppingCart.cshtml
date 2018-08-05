@@ -1,4 +1,4 @@
-﻿@model IEnumerable<IT_BookTrade.Models.Book>
+﻿@model IEnumerable<IT_BookTrade.Models.ShoppingCartItem>
 
 @{
     ViewBag.Title = "ShoppingCart";
@@ -7,61 +7,61 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Title)
+            @Html.DisplayNameFor(model => model.Book.Title)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.BookAuthor)
+            Book Author
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ImageURL)
+            ImageURL
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Rating)
+            Rating
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Price)
+            Price
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Tradeable)
+            Tradeable
         </th>
         <th>
             @Html.ActionLink("Clear cart", "ClearShoppingCart", new {  }, new { @class = "btn btn-danger" })
         </th>
     </tr>
-
-@foreach (var book in Model) {
+   
+@foreach (var item in Model) {
     <tr>
         <td>
             <div>
-                @book.Title
+                @item.Book.Title
             </div>
         </td>
         <td>
             <div>
-                @book.BookAuthor
+                @item.Book.BookAuthor
             </div>
         </td>
         <td>
             <div>
-                <img height="200" src="@book.ImageURL" />
+                <img height="200" src="@item.Book.ImageURL" />
             </div>
         </td>
         <td>
-            <div class="star-ratings-sprite"><span style="width:@(book.Rating*20)%" class="star-ratings-sprite-rating"></span></div>
-            <span>@book.Rating/5</span>
+            <div class="star-ratings-sprite"><span style="width:@(item.Book.Rating*20)%" class="star-ratings-sprite-rating"></span></div>
+            <span>@item.Book.Rating/5</span>
         </td>
         <td>
             <div class="card-text card-price">
-                $@book.Price
+                $@item.Book.Price
             </div>
         </td>
         <td>
             <div>
-                @(book.Tradeable ? "Yes" : "No")
+                @(item.Book.Tradeable ? "Yes" : "No")
             </div>
         </td>
         <td>
-            @Html.ActionLink("Remove from cart", "RemoveFromCart", new { id=book.ID }, new { @class = "btn btn-danger" })
+            @Html.ActionLink("Remove from cart", "RemoveFromCart", new { id= item.Book.ID }, new { @class = "btn btn-danger" })
         </td>
     </tr>
 }
@@ -69,6 +69,6 @@
 <div>
     @Html.ActionLink("Back", "Index", new { }, new { @class = "btn btn-outline-secondary" })
     @Html.ActionLink("Checkout", "CheckOut", new { }, new { @class = "btn btn-outline-success" })
-    <div class="card-text card-price">Total: $@ViewBag.TotalCostOfCart</div>
+    <div class="card-text card-price">Total: $ @ViewBag.TotalPrice</div>
 </div>
     

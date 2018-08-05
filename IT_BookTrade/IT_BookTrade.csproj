@@ -270,12 +270,22 @@
     <Compile Include="Migrations\201808011911367_add_Wishlist3.Designer.cs">
       <DependentUpon>201808011911367_add_Wishlist3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808042208031_ShoppingCart.cs" />
+    <Compile Include="Migrations\201808042208031_ShoppingCart.Designer.cs">
+      <DependentUpon>201808042208031_ShoppingCart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808042227547_ShoppingCart2.cs" />
+    <Compile Include="Migrations\201808042227547_ShoppingCart2.Designer.cs">
+      <DependentUpon>201808042227547_ShoppingCart2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\BookContext.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\ShoppingCart.cs" />
+    <Compile Include="Models\ShoppingCartItem.cs" />
     <Compile Include="Models\Wishlist.cs" />
     <Compile Include="Models\WishlistItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -450,6 +460,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808011911367_add_Wishlist3.resx">
       <DependentUpon>201808011911367_add_Wishlist3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808042208031_ShoppingCart.resx">
+      <DependentUpon>201808042208031_ShoppingCart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808042227547_ShoppingCart2.resx">
+      <DependentUpon>201808042227547_ShoppingCart2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

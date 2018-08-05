@@ -19,7 +19,9 @@ namespace IT_BookTrade.Models
         {
         }
 
-        public DbSet<WishlistItem> Wishlist { get; set; } 
+        public DbSet<WishlistItem> Wishlist { get; set; }
+        public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
+        public DbSet<ShoppingCart> ShoppingCart { get; set; } 
         public System.Data.Entity.DbSet<IT_BookTrade.Models.Book> Books { get; set; }
     }
 }

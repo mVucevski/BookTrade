@@ -15,14 +15,29 @@ namespace IT_BookTrade.Controllers
         private BookContext db = new BookContext();
         public static List<Book> shoppingCart = new List<Book>();
 
-        private void AddBooksToBag()
+        private void AddBooksToBag(ShoppingCart cart)
         {
             List<int> bookIDs = new List<int>();
-            foreach (Book book in shoppingCart)
+            foreach (ShoppingCartItem item in cart.ShoppingCartItems)
             {
-                bookIDs.Add(book.ID);
+                bookIDs.Add(item.Book.ID);
             }
             ViewBag.BookIDs = bookIDs;
+        }
+
+        private void updateCartIcon()
+        {
+            var total = db.ShoppingCart.Where(x => x.UserEmail.Equals(User.Identity.Name)).ToList().First();
+
+            if (total != null)
+            {
+                ViewBag.TotalBooksInCart = total.ShoppingCartItems.Count;
+                AddBooksToBag(total);
+            }
+            else
+            {
+                ViewBag.TotalBooksInCart = 0;
+            }
         }
 
         private void RemoveBookFromCart(int id)
@@ -37,6 +52,27 @@ namespace IT_BookTrade.Controllers
                     break;
                 }
             }
+
+
+            //------> Remove from cart function <-----
+            var cart = db.ShoppingCart.Where(x => x.UserEmail.Equals(User.Identity.Name)).ToList().First();
+
+            if(cart != null)
+            {
+                var item = cart.ShoppingCartItems.Where(x => x.Book.ID == id).First();
+
+                if(item != null)
+                {
+                    cart.TotalPrice -= item.Book.Price;
+                    cart.ShoppingCartItems.Remove(item);
+                    db.ShoppingCartItems.Remove(item);
+
+                    db.SaveChanges();
+                }
+            }
+
+            //------> Remove from cart function <-----
+            updateCartIcon();
         }
 
         private double TotalCostOfCart()
@@ -50,11 +86,18 @@ namespace IT_BookTrade.Controllers
         }
 
         //GET: Shopping Cart
+        [Authorize]
         public ActionResult ShoppingCart()
         {
-            ViewBag.TotalBooksInCart = shoppingCart.Count;
-            ViewBag.TotalCostOfCart = TotalCostOfCart();
-            return View(shoppingCart);
+            // ViewBag.TotalBooksInCart = shoppingCart.Count;
+            // ViewBag.TotalCostOfCart = TotalCostOfCart();
+
+            
+
+            var cartItems = db.ShoppingCart.Where(x => x.UserEmail.Equals(User.Identity.Name)).ToList().First();
+            ViewBag.TotalPrice = cartItems.TotalPrice;
+            updateCartIcon();
+            return View(cartItems.ShoppingCartItems);
         }
 
         //Add to cart (If on index page)
@@ -69,7 +112,10 @@ namespace IT_BookTrade.Controllers
             {
                 return HttpNotFound();
             }
-            shoppingCart.Add(book);
+
+            AddToCart(book);
+
+            //------> Add to cart function <-----
             return RedirectToAction("Index");
         }
 
@@ -85,8 +131,46 @@ namespace IT_BookTrade.Controllers
             {
                 return HttpNotFound();
             }
-            shoppingCart.Add(book);
+
+            AddToCart(book);
+
+
             return RedirectToAction("Details", new { id });
+        }
+
+        private void AddToCart(Book book)
+        {
+            //------> Add to cart function <-----
+            var cart = db.ShoppingCart.Where(x => x.UserEmail.Equals(User.Identity.Name)).ToList().First();
+
+            if (cart == null)
+            {
+
+                cart = new ShoppingCart()
+                {
+                    UserEmail = User.Identity.Name,
+                    TotalPrice = 0,
+                    DiscountCode = "",
+                    ShoppingCartItems = new List<ShoppingCartItem>()
+                };
+                db.ShoppingCart.Add(cart);
+            }
+
+            if (!cart.ShoppingCartItems.Exists(x => x.Book.ID == book.ID))
+            {
+                cart.ShoppingCartItems.Add(new ShoppingCartItem()
+                {
+                    Book = book,
+                    ShoppingCartId = cart.ShoppingCartId
+                });
+
+                cart.TotalPrice += book.Price;
+            }
+            
+
+            db.SaveChanges();
+            updateCartIcon();
+            //------> Add to cart function <-----
         }
 
         //Add to wishlist (If on details page)
@@ -157,24 +241,35 @@ namespace IT_BookTrade.Controllers
         //Clear cart
         public ActionResult ClearShoppingCart()
         {
-            shoppingCart.Clear();
+            //shoppingCart.Clear();
+
+            var cartItems = db.ShoppingCart.Where(x => x.UserEmail.Equals(User.Identity.Name)).ToList().First();
+
+            if(cartItems != null)
+            {
+                cartItems.TotalPrice = 0;
+                cartItems.ShoppingCartItems.Clear();
+                db.ShoppingCartItems.Where(x => x.ShoppingCartId == cartItems.ShoppingCartId).ForEachAsync(x => db.ShoppingCartItems.Remove(x));
+                db.SaveChanges();
+                updateCartIcon();
+            }
+
             return RedirectToAction("ShoppingCart");
         }
 
         // GET: Books
         public ActionResult Index()
         {
-            AddBooksToBag();
-            ViewBag.TotalBooksInCart = shoppingCart.Count;
-            
+            updateCartIcon();
             return View(db.Books.ToList());
         }
+
+       
 
         // GET: Books/Search
         public ActionResult Search(string search)
         {
-            AddBooksToBag();
-            ViewBag.TotalBooksInCart = shoppingCart.Count;
+            updateCartIcon();
 
             var tmpBooks = db.Books.ToList();
             var books = new List<Book>();
@@ -207,8 +302,7 @@ namespace IT_BookTrade.Controllers
                 return HttpNotFound();
             }
 
-            AddBooksToBag();
-            ViewBag.TotalBooksInCart = shoppingCart.Count;
+            updateCartIcon();
             return View(book);
         }
 
