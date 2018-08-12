@@ -278,12 +278,27 @@
     <Compile Include="Migrations\201808042227547_ShoppingCart2.Designer.cs">
       <DependentUpon>201808042227547_ShoppingCart2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808080002003_Add-Order.cs" />
+    <Compile Include="Migrations\201808080002003_Add-Order.Designer.cs">
+      <DependentUpon>201808080002003_Add-Order.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808080015324_Order2.cs" />
+    <Compile Include="Migrations\201808080015324_Order2.Designer.cs">
+      <DependentUpon>201808080015324_Order2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808112306332_OrderDeatils_Add_CardType.cs" />
+    <Compile Include="Migrations\201808112306332_OrderDeatils_Add_CardType.Designer.cs">
+      <DependentUpon>201808112306332_OrderDeatils_Add_CardType.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\BookContext.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\OrderDetails.cs" />
+    <Compile Include="Models\OrderItem.cs" />
     <Compile Include="Models\ShoppingCart.cs" />
     <Compile Include="Models\ShoppingCartItem.cs" />
     <Compile Include="Models\Wishlist.cs" />
@@ -466,6 +481,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808042227547_ShoppingCart2.resx">
       <DependentUpon>201808042227547_ShoppingCart2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808080002003_Add-Order.resx">
+      <DependentUpon>201808080002003_Add-Order.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808080015324_Order2.resx">
+      <DependentUpon>201808080015324_Order2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808112306332_OrderDeatils_Add_CardType.resx">
+      <DependentUpon>201808112306332_OrderDeatils_Add_CardType.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

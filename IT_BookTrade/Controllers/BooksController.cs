@@ -77,12 +77,16 @@ namespace IT_BookTrade.Controllers
 
         private double TotalCostOfCart()
         {
-            double totalCost = 0;
-            foreach (Book book in shoppingCart)
-            {
-                totalCost += book.Price;
-            }
-            return totalCost;
+            /* double totalCost = 0;
+             foreach (Book book in shoppingCart)
+             {
+                 totalCost += book.Price;
+             }*/
+            var total = db.ShoppingCart.Where(x => x.UserEmail.Equals(User.Identity.Name)).ToList().First();
+
+
+
+            return total.TotalPrice;
         }
 
         //GET: Shopping Cart
@@ -238,21 +242,29 @@ namespace IT_BookTrade.Controllers
             return RedirectToAction("Details", new { id });
         }
 
-        //Clear cart
-        public ActionResult ClearShoppingCart()
+        private void ClearCart()
         {
-            //shoppingCart.Clear();
-
             var cartItems = db.ShoppingCart.Where(x => x.UserEmail.Equals(User.Identity.Name)).ToList().First();
 
-            if(cartItems != null)
+            if (cartItems != null)
             {
                 cartItems.TotalPrice = 0;
+                var listShopingItems = db.ShoppingCartItems.Where(x => x.ShoppingCartId == cartItems.ShoppingCartId).ToList();
+
+                foreach (var x in listShopingItems) {
+                    db.ShoppingCartItems.Remove(x);
+                }
+
                 cartItems.ShoppingCartItems.Clear();
-                db.ShoppingCartItems.Where(x => x.ShoppingCartId == cartItems.ShoppingCartId).ForEachAsync(x => db.ShoppingCartItems.Remove(x));
                 db.SaveChanges();
                 updateCartIcon();
             }
+        }
+
+        //Clear cart
+        public ActionResult ClearShoppingCart()
+        {
+            ClearCart();
 
             return RedirectToAction("ShoppingCart");
         }
@@ -391,25 +403,96 @@ namespace IT_BookTrade.Controllers
         }
 
         // GET: Checkout
+
         public ActionResult CheckOut()
         {
-            ViewBag.TotalBooksInCart = shoppingCart.Count;
+            updateCartIcon();
+            // ViewBag.TotalBooksInCart = shoppingCart.Count;
             ViewBag.TotalCostOfCart = TotalCostOfCart();
             return View();
         }
 
-        // GET: OrderSummary
-        public ActionResult OrderSummary()
+        [HttpPost]
+        public ActionResult CheckOut(OrderDetails checkoutDetails, string mm)
         {
-            List<Book> books = new List<Book>();
-            foreach (Book book in shoppingCart)
-            {
-                books.Add(book);
+            Order ORDER;
+            if (db.Order.Count() == 0)
+                ORDER = null;
+            else
+                ORDER = db.Order.Where(p => p.UserEmail.Equals(User.Identity.Name)).First();
+
+            if (ORDER == null) {
+
+                ORDER = new Order()
+                {
+                    UserEmail = User.Identity.Name,
+                    OrdersDetails = new List<OrderDetails>()
+                };
+                db.Order.Add(ORDER);
             }
-            ViewBag.TotalCostOfCart = TotalCostOfCart();
-            ClearShoppingCart();
-            ViewBag.TotalBooksInCart = shoppingCart.Count();
-            return View(books);
+
+
+
+            checkoutDetails.ExpDate = mm + "/" + checkoutDetails.ExpDate;
+            checkoutDetails.InvoiceID = randomInovice(5).ToUpper();
+            /*
+             * To-Do!
+             * Implement discount system
+             */
+            checkoutDetails.DiscountPrecentage = 0;
+            checkoutDetails.OrderDate = DateTime.Now;
+
+            var shopingItems = db.ShoppingCart.Where(x => x.UserEmail.Equals(User.Identity.Name)).ToList().First().ShoppingCartItems;
+            var orderItems = new List<OrderItem>();
+
+            foreach(var x in shopingItems)
+            {
+                orderItems.Add(new OrderItem()
+                {
+                    BookTitle = x.Book.Title,
+                    BookPrice = x.Book.Price
+                });
+            }
+
+            checkoutDetails.OrderItems = orderItems;
+
+            ORDER.OrdersDetails.Add(checkoutDetails);
+
+            
+            db.SaveChanges();
+            ClearCart();
+            return RedirectToAction("OrderSummary", "Books", new { id = checkoutDetails.InvoiceID });
+            //System.Diagnostics.Debug.WriteLine("MMMM " + mm);
+        }
+
+        private string randomInovice(int len) {
+            Random random = new Random();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, len)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
+        // GET: OrderSummary
+        public ActionResult OrderSummary(string id)
+        {
+            
+            var order = db.Order.Where(p => p.UserEmail.Equals(User.Identity.Name)).First()
+                .OrdersDetails.Find(x=>x.InvoiceID.Equals(id));
+               
+           
+            //To-Do
+            //Add Total property in OrderDetails Table and Sum the prices with the discount
+
+            if (order == null)
+            {
+                return RedirectToAction("Index", "Books");
+            }
+            else
+            {
+                ViewBag.TotalCost = order.OrderItems.Sum(x => x.BookPrice);
+                return View(order);
+            }
+
         }
 
         protected override void Dispose(bool disposing)

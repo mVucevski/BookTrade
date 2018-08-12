@@ -1,8 +1,10 @@
-﻿@model IEnumerable<IT_BookTrade.Models.Book>
+﻿@model IT_BookTrade.Models.OrderDetails
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@using (Html.BeginForm("CheckOut", "Books", FormMethod.Post, new { @class = "", role = "form" }))
+{
 <div class="container">
     <div class="row">
         <div class="col-md-4">
@@ -21,31 +23,31 @@
                 <div class="row">
                     <div class="col-md-12 form-group">
                         <label class="control-label"><strong>Payment Method</strong></label>
-                        <select class="form-control" id="exampleFormControlSelect1" title="Choose one of the following...">
-                            <option>VISA</option>
-                            <option>Maestro</option>
-                            <option>MasterCard</option>
-                            <option>American Express</option>
-                        </select>
+                       @Html.DropDownListFor(m => m.CardType, new List<SelectListItem>
+                   { new SelectListItem{Text="VISA", Value="VISA"},
+                     new SelectListItem{Text="Maestro", Value="Maestro"},
+                     new SelectListItem{Text="MasterCard", Value="MasterCard"},
+                     new SelectListItem{Text="American Express", Value="American Express"}
+                  }, "Please select", new { @class = "form-control" })
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-12 form-group">
                         <label class="control-label"><strong>Name on Card</strong></label>
-                        <input type="text" class="form-control">
+                        @Html.TextBoxFor(m => m.CardName, new { @class="form-control" })
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 form-group">
                         <label class="control-label"><strong>Card Number</strong></label>
-                        <input type="text" class="form-control">
+                        @Html.TextBoxFor(m => m.CardNumber, new { @class = "form-control" })
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 form-group">
                         <label class="control-label"><strong>Billing Address</strong></label>
-                        <input type="text" class="form-control">
+                        @Html.TextBoxFor(m => m.BillingAddress, new { @class = "form-control" })
                     </div>
                 </div>
                 <div class="row">
@@ -63,10 +65,26 @@
                         <input type="text" class="form-control" placeholder="ex. 311">
                     </div>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" placeholder="MM">
+                        <input type="text" class="form-control" placeholder="MM" name="mm" id="mm">
                     </div>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" placeholder="YYYY">
+                        @Html.TextBoxFor(m => m.ExpDate, new { placeholder = "YYYY", @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        @Html.CheckBoxFor(m => m.Gift)
+                        <label class="form-check-label" for="defaultCheck1">
+                            Send As Gift
+                        </label>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-12 form-group">
+                        <label class="control-label"><strong>Shipping Address</strong></label>
+                        @Html.TextBoxFor(m => m.ShippingAddress, new { @class = "form-control" })
                     </div>
                 </div>
 
@@ -80,7 +98,7 @@
                 <br>
                 <div class='row'>
                     <div class='col-md-12 form-group'>
-                        @Html.ActionLink("Pay", "OrderSummary", new { }, new { @class = "form-control btn btn-primary submit-button" })
+                        <button class='form-control btn btn-primary submit-button' type='submit' value="Pay">Pay</button>
                     </div>
                 </div>
             </form>
@@ -89,3 +107,4 @@
         <div class="col-md-4"></div>
     </div>
 </div>
+}

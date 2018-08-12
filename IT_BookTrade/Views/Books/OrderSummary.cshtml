@@ -1,4 +1,4 @@
-﻿@model IEnumerable<IT_BookTrade.Models.Book>
+﻿@model IT_BookTrade.Models.OrderDetails
 @{
     ViewBag.Title = "Order Summary";
 }
@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-xs-12 col-12">
             <div class="text-center">
-                <h2>Invoice for order #33221</h2>
+                <h2>Invoice for order #@Model.InvoiceID</h2>
             </div>
             <hr>
             <div class="row">
@@ -16,11 +16,8 @@
                     <div class="card height h-100">
                         <div class="card-header">Billing Details</div>
                         <div class="card-body">
-                            <strong>David Peere:</strong><br>
-                            1111 Army Navy Drive<br>
-                            Arlington<br>
-                            VA<br>
-                            <strong>22 203</strong><br>
+                            <strong>@Model.CardName</strong><br>
+                            @Model.BillingAddress<br>
                         </div>
                     </div>
                 </div>
@@ -28,9 +25,9 @@
                     <div class="card height h-100">
                         <div class="card-header">Payment Information</div>
                         <div class="card-body">
-                            <strong>Card Name:</strong> Visa<br>
-                            <strong>Card Number:</strong> ***** 332<br>
-                            <strong>Exp Date:</strong> 09/2020<br>
+                            <strong>Card Name:</strong> @Model.CardName<br>
+                            <strong>Card Number:</strong> ***** @Model.CardNumber<br>
+                            <strong>Exp Date:</strong> @Model.ExpDate<br>
                         </div>
                     </div>
                 </div>
@@ -38,10 +35,10 @@
                     <div class="card height h-100">
                         <div class="card-header">Order Preferences</div>
                         <div class="card-body">
-                            <strong>Gift:</strong> No<br>
+                            <strong>Gift:</strong> @Model.Gift ? "Yes" : "No"<br>
                             <strong>Express Delivery:</strong> Yes<br>
                             <strong>Insurance:</strong> No<br>
-                            <strong>Coupon:</strong> No<br>
+                            <strong>Discount:</strong> @Model.DiscountPrecentage<br>
                         </div>
                     </div>
                 </div>
@@ -72,20 +69,20 @@
                         <table class="table table-sm">
                             <thead>
                                 <tr>
-                                    <td><strong>Item Name</strong></td>
+                                    <td><strong>Book Name</strong></td>
                                     <td></td>
                                     <td></td>
-                                    <td class="text-right"><strong>Item Price</strong></td>
+                                    <td class="text-right"><strong>Price</strong></td>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var book in Model)
+                                @foreach (var item in Model.OrderItems)
                                 {
                                     <tr>
-                                        <td>@book.Title</td>
+                                        <td>@item.BookTitle</td>
                                         <td></td>
                                         <td></td>
-                                        <td class="text-right">$@book.Price</td>
+                                        <td class="text-right">$@item.BookPrice</td>
                                     </tr>
                                 }
                                 <tr>
@@ -98,7 +95,7 @@
                                     <td class="emptyrow"></td>
                                     <td class="emptyrow"></td>
                                     <td class="emptyrow text-center"><strong>Total</strong></td>
-                                    <td class="emptyrow text-right">$@ViewBag.TotalCostOfCart</td>
+                                    <td class="emptyrow text-right">$@ViewBag.TotalCost</td>
                                 </tr>
                             </tbody>
                         </table>
