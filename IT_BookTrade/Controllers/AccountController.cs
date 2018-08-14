@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using IT_BookTrade.Models;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace IT_BookTrade.Controllers
 {
@@ -197,12 +199,37 @@ namespace IT_BookTrade.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+
+                    //------> Add to cart function <-----
+
+                        BookContext db = new BookContext();
+
+
+                        var cart = new ShoppingCart()
+                        {
+                            UserEmail = model.Email,
+                            TotalPrice = 0,
+                            DiscountCode = "",
+                            ShoppingCartItems = new List<ShoppingCartItem>()
+                        };
+
+                        db.ShoppingCart.Add(cart);
+                    
+
+                    
+
+
+                        db.SaveChanges();
+                    //------> Add to cart function <-----
+
+
 
                     return RedirectToAction("Index", "Books");
                 }

@@ -212,6 +212,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BooksController.cs" />
+    <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\WishlistController.cs" />
@@ -290,10 +291,15 @@
     <Compile Include="Migrations\201808112306332_OrderDeatils_Add_CardType.Designer.cs">
       <DependentUpon>201808112306332_OrderDeatils_Add_CardType.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808142152080_Add_Chat.cs" />
+    <Compile Include="Migrations\201808142152080_Add_Chat.Designer.cs">
+      <DependentUpon>201808142152080_Add_Chat.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\BookContext.cs" />
+    <Compile Include="Models\Chat.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Order.cs" />
@@ -423,6 +429,7 @@
     <Content Include="Views\Books\Search.cshtml" />
     <Content Include="Views\Books\OrderSummary.cshtml" />
     <Content Include="Views\Wishlist\Index.cshtml" />
+    <Content Include="Views\Chat\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -490,6 +497,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808112306332_OrderDeatils_Add_CardType.resx">
       <DependentUpon>201808112306332_OrderDeatils_Add_CardType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808142152080_Add_Chat.resx">
+      <DependentUpon>201808142152080_Add_Chat.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

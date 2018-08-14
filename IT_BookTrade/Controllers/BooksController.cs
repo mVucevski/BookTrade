@@ -27,16 +27,20 @@ namespace IT_BookTrade.Controllers
 
         private void updateCartIcon()
         {
-            var total = db.ShoppingCart.Where(x => x.UserEmail.Equals(User.Identity.Name)).ToList().First();
+            var userShoppingCart = db.ShoppingCart.Where(x => x.UserEmail.Equals(User.Identity.Name)).ToList().First();
 
-            if (total != null)
+
+
+            if (userShoppingCart != null && User.Identity.Name.Trim().Length > 0)
             {
-                ViewBag.TotalBooksInCart = total.ShoppingCartItems.Count;
-                AddBooksToBag(total);
+                ViewBag.TotalBooksInCart = userShoppingCart.ShoppingCartItems.Count;
+                AddBooksToBag(userShoppingCart);
             }
             else
             {
                 ViewBag.TotalBooksInCart = 0;
+                List<int> bookIDs = new List<int>();
+                ViewBag.BookIDs = bookIDs;
             }
         }
 
@@ -419,7 +423,7 @@ namespace IT_BookTrade.Controllers
             if (db.Order.Count() == 0)
                 ORDER = null;
             else
-                ORDER = db.Order.Where(p => p.UserEmail.Equals(User.Identity.Name)).First();
+                ORDER = db.Order.FirstOrDefault(p => p.UserEmail.Equals(User.Identity.Name));
 
             if (ORDER == null) {
 
@@ -434,7 +438,11 @@ namespace IT_BookTrade.Controllers
 
 
             checkoutDetails.ExpDate = mm + "/" + checkoutDetails.ExpDate;
-            checkoutDetails.InvoiceID = randomInovice(5).ToUpper();
+
+
+            var uniqueId = (ORDER.OrdersDetails.Count + 1).ToString();
+
+            checkoutDetails.InvoiceID = uniqueId + "-" + randomInovice(5).ToUpper();
             /*
              * To-Do!
              * Implement discount system
@@ -460,6 +468,9 @@ namespace IT_BookTrade.Controllers
 
             
             db.SaveChanges();
+
+
+
             ClearCart();
             return RedirectToAction("OrderSummary", "Books", new { id = checkoutDetails.InvoiceID });
             //System.Diagnostics.Debug.WriteLine("MMMM " + mm);
