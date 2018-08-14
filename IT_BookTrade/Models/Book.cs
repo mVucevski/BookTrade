@@ -35,5 +35,7 @@ namespace IT_BookTrade.Models
         public bool Tradeable { get; set; }
 
         public string ISBN { get; set; }
+
+        public string SellerEmail { get; set; }
     }
 }

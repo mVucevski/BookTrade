@@ -295,6 +295,10 @@
     <Compile Include="Migrations\201808142152080_Add_Chat.Designer.cs">
       <DependentUpon>201808142152080_Add_Chat.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808142249421_addBookSeller.cs" />
+    <Compile Include="Migrations\201808142249421_addBookSeller.Designer.cs">
+      <DependentUpon>201808142249421_addBookSeller.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Book.cs" />
@@ -500,6 +504,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808142152080_Add_Chat.resx">
       <DependentUpon>201808142152080_Add_Chat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808142249421_addBookSeller.resx">
+      <DependentUpon>201808142249421_addBookSeller.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

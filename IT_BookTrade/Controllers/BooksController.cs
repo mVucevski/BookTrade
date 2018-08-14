@@ -338,6 +338,7 @@ namespace IT_BookTrade.Controllers
         {
             if (ModelState.IsValid)
             {
+                book.SellerEmail = User.Identity.Name;
                 db.Books.Add(book);
                 db.SaveChanges();
                 return RedirectToAction("Index");
