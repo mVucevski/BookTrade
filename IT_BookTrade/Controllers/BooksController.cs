@@ -507,6 +507,27 @@ namespace IT_BookTrade.Controllers
 
         }
 
+        //GET: Chat (Redirect)
+        public ActionResult TradeContact(string user)
+        {
+            Chat tmp = db.Chat.FirstOrDefault(x => (x.User2.Equals(User.Identity.Name) && x.User1.Equals(user)) || (x.User1.Equals(User.Identity.Name) && x.User2.Equals(user)));
+
+            if(tmp == null)
+            {
+               tmp = db.Chat.Add(new Chat()
+                {
+                    User1 = User.Identity.Name,
+                    User2 = user,
+                    Messages = new List<ChatMessages>()
+                });
+                db.SaveChanges();
+            }
+
+
+
+            return RedirectToAction("Index", "Chat", new { Id = tmp.ChatId });
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -1,39 +1,61 @@
-﻿@model IEnumerable<IT_BookTrade.Models.Chat>
+﻿@model IT_BookTrade.Models.Chat
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Chat";
 }
 
-<h2>Index</h2>
+<h3 class=" text-center">Messaging</h3>
+<hr>
+<h3 class="username-top">@ViewBag.UserName</h3>
+<div class="messaging">
+    <div class="inbox_msg">
+        <div class="mesgs">
+            <div class="msg_history">
+                @foreach (var msg in Model.Messages)
+                {
+                    if (msg.PostedBy != ViewBag.LoggedInUser)
+                    {
+                        <div class="incoming_msg">
+                            <div class="received_msg">
+                                <div class="received_withd_msg">
+                                    <p>
+                                        @msg.Message
+                                    </p>
+                                    <span class="time_date">@msg.Date</span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="outgoing_msg">
+                            <div class="sent_msg">
+                                <p>
+                                    @msg.Message
+                                </p>
+                                <span class="time_date">@msg.Date</span>
+                            </div>
+                        </div>
+                    }
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.User1)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.User2)
-        </th>
-        <th></th>
-    </tr>
+                }
+               
+                    
+            </div>
+            <div class="type_msg">
+                <div class="input_msg_write">
+                    @using (Html.BeginForm("SendMsg", "Chat", FormMethod.Post))
+                    {
+                        @Html.HiddenFor(model => model.ChatId)
+                        <input type="text" class="write_msg" placeholder="Type a message" name="Msg" id="Msg" />
+                        <button class="msg_send_btn" type="submit" id="ChatId" value="ChatId">Send</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.User1)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.User2)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ChatId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ChatId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ChatId })
-        </td>
-    </tr>
+@section Styles {
+    <link href="@Url.Content("~/Content/ChatStyleSheet.css")" rel="stylesheet" type="text/css" />
 }
-
-</table>
