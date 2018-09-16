@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -20,8 +22,11 @@ namespace IT_BookTrade.Models
 
         public string Description { get; set; }
 
-        [Required]
-        public string ImageURL { get; set; }
+        [DisplayName("UploadImage")]
+        public string ImagePath { get; set; }
+
+        [NotMapped]
+        public HttpPostedFileBase ImageFile { get; set; }
 
         [Range(1, 5)]
         public double Rating { get; set; }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -27,9 +28,7 @@ namespace IT_BookTrade.Controllers
 
         private void updateCartIcon()
         {
-            var userShoppingCart = db.ShoppingCart.Where(x => x.UserEmail.Equals(User.Identity.Name)).ToList().First();
-
-
+            var userShoppingCart = db.ShoppingCart.Where(x => x.UserEmail.Equals(User.Identity.Name)).FirstOrDefault();
 
             if (userShoppingCart != null && User.Identity.Name.Trim().Length > 0)
             {
@@ -59,9 +58,9 @@ namespace IT_BookTrade.Controllers
 
 
             //------> Remove from cart function <-----
-            var cart = db.ShoppingCart.Where(x => x.UserEmail.Equals(User.Identity.Name)).ToList().First();
+            var cart = db.ShoppingCart.Where(x => x.UserEmail.Equals(User.Identity.Name)).FirstOrDefault();
 
-            if(cart != null)
+            if (cart != null)
             {
                 var item = cart.ShoppingCartItems.Where(x => x.Book.ID == id).First();
 
@@ -86,7 +85,7 @@ namespace IT_BookTrade.Controllers
              {
                  totalCost += book.Price;
              }*/
-            var total = db.ShoppingCart.Where(x => x.UserEmail.Equals(User.Identity.Name)).ToList().First();
+            var total = db.ShoppingCart.Where(x => x.UserEmail.Equals(User.Identity.Name)).FirstOrDefault();
 
 
 
@@ -100,9 +99,9 @@ namespace IT_BookTrade.Controllers
             // ViewBag.TotalBooksInCart = shoppingCart.Count;
             // ViewBag.TotalCostOfCart = TotalCostOfCart();
 
-            
 
-            var cartItems = db.ShoppingCart.Where(x => x.UserEmail.Equals(User.Identity.Name)).ToList().First();
+
+            var cartItems = db.ShoppingCart.Where(x => x.UserEmail.Equals(User.Identity.Name)).FirstOrDefault();
             ViewBag.TotalPrice = cartItems.TotalPrice;
             updateCartIcon();
             return View(cartItems.ShoppingCartItems);
@@ -149,7 +148,7 @@ namespace IT_BookTrade.Controllers
         private void AddToCart(Book book)
         {
             //------> Add to cart function <-----
-            var cart = db.ShoppingCart.Where(x => x.UserEmail.Equals(User.Identity.Name)).ToList().First();
+            var cart = db.ShoppingCart.Where(x => x.UserEmail.Equals(User.Identity.Name)).FirstOrDefault();
 
             if (cart == null)
             {
@@ -323,6 +322,7 @@ namespace IT_BookTrade.Controllers
         }
 
         // GET: Books/Create
+        [Authorize]
         public ActionResult Create()
         {
             ViewBag.TotalBooksInCart = shoppingCart.Count;
@@ -334,10 +334,17 @@ namespace IT_BookTrade.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Title,ImageURL,Rating,BookAuthor,BookDescription,Description,Price,Tradeable,ISBN")] Book book)
+        public ActionResult Create([Bind(Include = "ID,Title,ImagePath,ImageFile,Rating,BookAuthor,BookDescription,Description,Price,Tradeable,ISBN")] Book book)
         {
             if (ModelState.IsValid)
             {
+                string filename = Path.GetFileNameWithoutExtension(book.ImageFile.FileName);
+                string extension = Path.GetExtension(book.ImageFile.FileName);
+                filename = DateTime.Now.ToString("yyyy_MM_dd_hh_mm_ss") + extension;
+                book.ImagePath = "~/Images/" + filename;
+                filename = Path.Combine(Server.MapPath("~/Images/"), filename);
+                book.ImageFile.SaveAs(filename);
+
                 book.SellerEmail = User.Identity.Name;
                 db.Books.Add(book);
                 db.SaveChanges();
