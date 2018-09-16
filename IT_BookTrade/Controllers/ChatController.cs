@@ -18,26 +18,6 @@ namespace IT_BookTrade.Controllers
         // GET: Chat
         public ActionResult Index(int Id)
         {
-            /*string email = "user1@user.com";
-
-            Chat tmp = db.Chat.FirstOrDefault(x => (x.User2.Equals(User.Identity.Name) && x.User1.Equals(email)) || (x.User1.Equals(User.Identity.Name) && x.User2.Equals(email)));
-
-            if(tmp == null)
-            {
-                 db.Chat.Add(new Chat() {
-                    User1 = User.Identity.Name,
-                    User2 = email,
-                    Messages = new List<ChatMessages>()
-                });
-                db.SaveChanges();
-            }
-
-
-
-            newMsg(tmp.ChatId, "Hello", false);
-
-            return View(db.Chat.ToList()); */
-
             var tmp = db.Chat.FirstOrDefault(x => x.ChatId == Id);
             if (tmp != null)
             {
@@ -91,6 +71,79 @@ namespace IT_BookTrade.Controllers
             }
 
             return RedirectToAction("Index", "Chat", new { Id = ChatId });
+        }
+
+        // GET: Inbox
+        [Authorize]
+        public ActionResult Inbox()
+        {
+            List<InboxItem> inboxList = new List<InboxItem>();
+            var chatsCheck = db.Chat.Where(x => x.User1.Equals(User.Identity.Name) || x.User2.Equals(User.Identity.Name));
+            List<Chat> chats = null;
+
+            if (chatsCheck.Any())
+            {
+                chats = chatsCheck.ToList();
+
+
+                string msg;
+                ApplicationUser sender;
+
+                if (chats != null)
+                {
+                    foreach (var c in chats)
+                    {
+                        if (c.Messages.Any())
+                        {
+                            var lastMsg = c.Messages.Last();
+                            if (lastMsg != null)
+                            {
+                                if (!lastMsg.PostedBy)
+                                {
+                                    if (c.User1.Equals(User.Identity.Name))
+                                    {
+                                        msg = "You: " + lastMsg.Message;
+                                        sender = usersDB.Users.Where(x => x.Email.Equals(c.User2)).FirstOrDefault();
+                                    }
+                                    else
+                                    {
+                                        msg = lastMsg.Message;
+                                        sender = usersDB.Users.Where(x => x.Email.Equals(c.User1)).FirstOrDefault();
+                                    }
+                                }
+                                else
+                                {
+                                    if (c.User2.Equals(User.Identity.Name))
+                                    {
+                                        msg = "You: " + lastMsg.Message;
+                                        sender = usersDB.Users.Where(x => x.Email.Equals(c.User1)).FirstOrDefault();
+                                    }
+                                    else
+                                    {
+                                        msg = lastMsg.Message;
+                                        sender = usersDB.Users.Where(x => x.Email.Equals(c.User2)).FirstOrDefault();
+                                    }
+                                }
+                                inboxList.Add(new InboxItem()
+                                {
+                                    Msg = msg,
+                                    Date_Msg = lastMsg.Date,
+                                    SenderName = sender.FirstName + " " + sender.LastName,
+                                    ChatID = lastMsg.ChatId
+                                });
+                            }
+                        }
+                    }
+                }
+
+
+                if (inboxList.Any())
+                {
+                    inboxList = inboxList.OrderByDescending(x => x.Date_Msg).ToList();
+                }
+            }
+
+            return View(inboxList);
         }
 
 

@@ -309,6 +309,7 @@
     <Compile Include="Models\BookContext.cs" />
     <Compile Include="Models\Chat.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\InboxItem.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\OrderDetails.cs" />
@@ -439,6 +440,7 @@
     <Content Include="Views\Books\OrderSummary.cshtml" />
     <Content Include="Views\Wishlist\Index.cshtml" />
     <Content Include="Views\Chat\Index.cshtml" />
+    <Content Include="Views\Chat\Inbox.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

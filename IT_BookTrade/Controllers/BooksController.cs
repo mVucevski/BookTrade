@@ -247,7 +247,7 @@ namespace IT_BookTrade.Controllers
 
         private void ClearCart()
         {
-            var cartItems = db.ShoppingCart.Where(x => x.UserEmail.Equals(User.Identity.Name)).ToList().First();
+            var cartItems = db.ShoppingCart.Where(x => x.UserEmail.Equals(User.Identity.Name)).FirstOrDefault();
 
             if (cartItems != null)
             {
