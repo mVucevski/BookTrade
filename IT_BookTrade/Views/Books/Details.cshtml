@@ -40,14 +40,24 @@
             <div class="col-3" style="border:1px solid silver;border-radius:20px;">
                 <strong style="color:#23c9ff;"> @Html.DisplayNameFor(model => model.Price)</strong>  <span style="color:#23c9ff;font-size:30px;">$@Html.DisplayFor(model => model.Price)</span>
                 <div>
-                    @if (Model.Tradeable)
+                    @if (Model.Tradeable && !User.Identity.Name.Equals(Model.SellerEmail))
                     {
                         @Html.ActionLink("Trade", "TradeContact", new { user = Model.SellerEmail }, new { @class = "btn btn-info" })
                     }
+                    @if (!User.Identity.Name.Equals(Model.SellerEmail))
+                    {
                     @Html.ActionLink("Wishlist", "AddToWishlistDetails", new { id = Model.ID }, new { @class = "btn btn-outline-danger" })
+                    }
                     @Html.ActionLink("Back", "Index", new { }, new { @class = "btn btn-outline-secondary" })
-                    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class = "btn btn-outline-secondary" })
-                    @if ((ViewBag.BookIDs as List<int>).Contains(Model.ID))
+                    @if (User.Identity.Name.Equals(Model.SellerEmail) || User.IsInRole("Admin"))
+                    {
+                        @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class = "btn btn-outline-secondary" })
+                        @Html.ActionLink("Delete", "Delete", new { id = Model.ID }, new { @class = "btn btn-outline-danger" })
+                    }
+                    
+                    @if (!User.Identity.Name.Equals(Model.SellerEmail))
+                    {
+                    if ((ViewBag.BookIDs as List<int>).Contains(Model.ID))
                     {
                         @Html.ActionLink("In Cart", "RemoveFromCartDetails", new { id = Model.ID }, new { @class = "btn btn-danger" })
                     }
@@ -55,6 +65,8 @@
                     {
                         @Html.ActionLink("Add to Cart", "AddToCartDetails", new { id = Model.ID }, new { @class = "btn btn-success" })
                     }
+                    }
+                    
                 </div>                                                                                   
             </div>
         </div>

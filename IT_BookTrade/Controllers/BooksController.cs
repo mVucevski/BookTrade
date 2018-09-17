@@ -120,7 +120,10 @@ namespace IT_BookTrade.Controllers
                 return HttpNotFound();
             }
 
-            AddToCart(book);
+            if (!book.SellerEmail.Equals(User.Identity.Name))
+            {
+                AddToCart(book);
+            }
 
             //------> Add to cart function <-----
             return RedirectToAction("Index");
@@ -139,10 +142,16 @@ namespace IT_BookTrade.Controllers
                 return HttpNotFound();
             }
 
-            AddToCart(book);
+            if (!book.SellerEmail.Equals(User.Identity.Name))
+            {
+                AddToCart(book);
+                return RedirectToAction("Details", new { id });
+            }
 
 
-            return RedirectToAction("Details", new { id });
+
+
+            return RedirectToAction("Index");
         }
 
         private void AddToCart(Book book)
@@ -193,6 +202,12 @@ namespace IT_BookTrade.Controllers
             {
                 return HttpNotFound();
             }
+
+            if (book.SellerEmail.Equals(User.Identity.Name))
+            {
+                return RedirectToAction("Index");
+            }
+
 
             var wishlistItem = db.Wishlist.Where(x => x.UserEmail.Equals(User.Identity.Name) && x.Book.ID == id).FirstOrDefault();
 
@@ -350,12 +365,15 @@ namespace IT_BookTrade.Controllers
         }
 
         private void saveImage(Book book) {
-            string filename = Path.GetFileNameWithoutExtension(book.ImageFile.FileName);
-            string extension = Path.GetExtension(book.ImageFile.FileName);
-            filename = DateTime.Now.ToString("yyyy_MM_dd_hh_mm_ss") + extension;
-            book.ImagePath = "~/Images/" + filename;
-            filename = Path.Combine(Server.MapPath("~/Images/"), filename);
-            book.ImageFile.SaveAs(filename);
+            if (book.ImageFile != null)
+            {
+                string filename = Path.GetFileNameWithoutExtension(book.ImageFile.FileName);
+                string extension = Path.GetExtension(book.ImageFile.FileName);
+                filename = DateTime.Now.ToString("yyyy_MM_dd_hh_mm_ss") + extension;
+                book.ImagePath = "~/Images/" + filename;
+                filename = Path.Combine(Server.MapPath("~/Images/"), filename);
+                book.ImageFile.SaveAs(filename);
+            }
         }
 
         // GET: Books/Edit/5
@@ -371,8 +389,13 @@ namespace IT_BookTrade.Controllers
                 return HttpNotFound();
             }
 
-            ViewBag.TotalBooksInCart = shoppingCart.Count;
-            return View(book);
+            if(book.SellerEmail.Equals(User.Identity.Name) || User.IsInRole("Admin"))
+            {
+                ViewBag.TotalBooksInCart = shoppingCart.Count;
+                return View(book);
+            }
+
+            return RedirectToAction("Index");
         }
 
 
@@ -381,10 +404,13 @@ namespace IT_BookTrade.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Title,ImagePath,ImageFile,Rating,BookAuthor,BookDescription,Description,Price,Tradeable,ISBN,SellerEmail")] Book book)
+        public ActionResult Edit([Bind(Include = "ID,Title,ImagePath,ImageFile,Rating,BookAuthor,BookDescription,Description,Price,Tradeable,ISBN,SellerEmail")] Book book, string ImagePath)
         {
+            System.Diagnostics.Debug.WriteLine("Slika " + ImagePath);
+            book.ImagePath = ImagePath;
+
             if (ModelState.IsValid)
-            {
+            {           
                 saveImage(book);           
                 db.Entry(book).State = EntityState.Modified;
                 db.SaveChanges();
@@ -405,7 +431,14 @@ namespace IT_BookTrade.Controllers
             {
                 return HttpNotFound();
             }
-            return View(book);
+            
+            if (book.SellerEmail.Equals(User.Identity.Name) || User.IsInRole("Admin"))
+            {
+                return View(book);
+            }
+
+
+            return RedirectToAction("Index");
         }
 
         // POST: Books/Delete/5
