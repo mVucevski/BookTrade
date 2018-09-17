@@ -2,40 +2,44 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @RenderSection("Styles", required: false)
-    <link href="~/Content/fonts/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/Content/fonts/css/font-awesome.min.css" rel="stylesheet">  
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.bundle.js"></script>
 </head>
 <body>
     <nav class="navbar-light bg-light">
         <div class="container">
             <div class="row vertical-align">
-                <div class="col-1">
+                <div class="col-md-1 d-sm-none d-none d-md-block logo">
                     <img class="img" style="height: 70px" src="~/Content/Images/book.png" />
                 </div>
-                <div class="col-2">
+                <div class="col-md-2">
                     <a href="@Url.Action("Index", "Home", new { area = "" }, null)" style="text-decoration:none"><h2 class="Toptitle">Book<strong>Trade</strong></h2></a>
                 </div>
-                <div class="col-9">
+                <div class="col-md-6">
                     <form class="form-inline" action="~/Books/Search" method="get">
-                        <input class="form-control mr-sm-2" style="width:60%" type="search" name="search" id="search" placeholder="Search for books by keyword / title / author / ISBN" aria-label="Search">
+                        <input class="form-control mr-sm-2" style="width:75%" type="search" name="search" id="search" placeholder="Search for books by keyword / title / author / ISBN" aria-label="Search">
                         <button href="href=" @Url.Action("Search", "Books", new { search = "" }, null) " style=" text-decoration:none"" class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Search">Search</button>
+                    </form>
+                </div>
+                <div class="col-md-3">
+                    <div class="float-left float-md-right float-sm-left float-xl-right float-lg-right">
                         @if (User.Identity.IsAuthenticated)
                         {
-                            @Html.ActionLink("Create", "Create", new { }, new { @class = "btn btn-outline-secondary my-2 my-sm-0" })
+                            @Html.ActionLink("Create", "Create", new { }, new { @class = "btn btn-outline-secondary my-1 my-sm-1 create-btn" })
                         }
-                        <div class="ml-auto">
-                            <i class="fa fa-heart pl-5 navIcons add-pointer" onclick="location.href='@Url.Action("Index", "Wishlist")'">
-                                <strong style="font-size:15px;display:flex;">Wishlist</strong>
-                            </i>
-                            <i class="fa fa-shopping-cart pl-4 navIcons add-pointer" onclick="location = 'Books/ShoppingCart'">
-                                <strong style="font-size:15px;display:flex;">@ViewBag.TotalBooksInCart Items</strong>
-                            </i>
-                        </div>
-                    </form>
+                        <i class="fa fa-heart pl-4 navIcons add-pointer" onclick="location.href='@Url.Action("Index", "Wishlist")'">
+                            <strong style="font-size:15px;display:flex;">Wishlist</strong>
+                        </i>
+                        <i class="fa fa-shopping-cart pl-4 navIcons add-pointer" onclick="location.href='@Url.Action("ShoppingCart", "Books")'">
+                            <strong style="font-size:15px;display:flex;">@ViewBag.TotalBooksInCart Items</strong>
+                        </i>
+                    </div>
                 </div>
             </div>
         </div>
@@ -76,7 +80,7 @@
                 <ul class="navbar-nav ml-auto" style="font-weight: bold;">
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li>
+                        <li class="pr-2">
                             <i class="fa fa-inbox pr-3 navIcons add-pointer" onclick="location.href='@Url.Action("Inbox", "Chat")'">
                                 <strong style="font-size:15px;display:flex;">Inbox</strong>
                             </i>

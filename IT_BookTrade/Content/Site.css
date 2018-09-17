@@ -4,6 +4,13 @@
     padding-right: 15px;
 }
 
+.create-btn{
+  vertical-align: text-bottom;
+}
+
+.logo{
+    margin-right: -10px;
+}
 
 .vertical-align {
     display: flex;
@@ -11,7 +18,6 @@
 }
 .Toptitle{
 	color:#35938b;
-	margin-left: -15px;
 	margin-top: 5px;
 }
 .navIcons{
@@ -89,4 +95,27 @@
         
 .table > tbody > tr > .highrow {
     border-top: 3px solid;
+}
+
+.cards-a{
+    text-decoration:none;
+    color:inherit;
+}
+
+.cards-a:hover{
+    text-decoration:none;
+    color:inherit;
+}
+
+.cards-a a.cards-a:hover{
+    text-decoration:none;
+}
+
+.cards-a a.cards-a:hover{
+    text-decoration:none;
+}
+
+.card a.card:hover{
+    text-decoration:none;
+    color:inherit;
 }

@@ -338,12 +338,7 @@ namespace IT_BookTrade.Controllers
         {
             if (ModelState.IsValid)
             {
-                string filename = Path.GetFileNameWithoutExtension(book.ImageFile.FileName);
-                string extension = Path.GetExtension(book.ImageFile.FileName);
-                filename = DateTime.Now.ToString("yyyy_MM_dd_hh_mm_ss") + extension;
-                book.ImagePath = "~/Images/" + filename;
-                filename = Path.Combine(Server.MapPath("~/Images/"), filename);
-                book.ImageFile.SaveAs(filename);
+                saveImage(book);
 
                 book.SellerEmail = User.Identity.Name;
                 db.Books.Add(book);
@@ -352,6 +347,15 @@ namespace IT_BookTrade.Controllers
             }
 
             return View(book);
+        }
+
+        private void saveImage(Book book) {
+            string filename = Path.GetFileNameWithoutExtension(book.ImageFile.FileName);
+            string extension = Path.GetExtension(book.ImageFile.FileName);
+            filename = DateTime.Now.ToString("yyyy_MM_dd_hh_mm_ss") + extension;
+            book.ImagePath = "~/Images/" + filename;
+            filename = Path.Combine(Server.MapPath("~/Images/"), filename);
+            book.ImageFile.SaveAs(filename);
         }
 
         // GET: Books/Edit/5
@@ -377,10 +381,11 @@ namespace IT_BookTrade.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Title,ImageURL,Rating,BookAuthor,BookDescription,Description,Price,Tradeable,ISBN")] Book book)
+        public ActionResult Edit([Bind(Include = "ID,Title,ImagePath,ImageFile,Rating,BookAuthor,BookDescription,Description,Price,Tradeable,ISBN,SellerEmail")] Book book)
         {
             if (ModelState.IsValid)
             {
+                saveImage(book);           
                 db.Entry(book).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
