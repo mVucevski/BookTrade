@@ -78,14 +78,6 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto" style="font-weight: bold;">
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <li class="pr-2">
-                            <i class="fa fa-inbox pr-3 navIcons add-pointer" onclick="location.href='@Url.Action("Inbox", "Chat")'">
-                                <strong style="font-size:15px;display:flex;">Inbox</strong>
-                            </i>
-                        </li>
-                    }
                     @Html.Partial("_LoginPartial")
                 </ul>
 
@@ -103,45 +95,31 @@
     <footer class="bg-dark text-light py-5">
         <div class="container">
             <div class="row">
-                <div class="col-md-3 col-lg-4 col-xl-3">
+                <div class="col-md-3" align="center">
                     <h5>About</h5>
                     <br />
                     <p class="mb-0">
-                        Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression.
+                        Welcome to BookTrade, one of the world's leading specialist online bookstores where you can buy, sell and trade your favorite books.
                     </p>
                 </div>
 
-                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto">
-                    <h5>Informations</h5>
-                    <br />
-                    <ul class="list-unstyled">
-                        <li><a href="">Link 1</a></li>
-                        <li><a href="">Link 2</a></li>
-                        <li><a href="">Link 3</a></li>
-                        <li><a href="">Link 4</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto">
-                    <h5>Others links</h5>
-                    <br />
-                    <ul class="list-unstyled">
-                        <li><a href="">Link 1</a></li>
-                        <li><a href="">Link 2</a></li>
-                        <li><a href="">Link 3</a></li>
-                        <li><a href="">Link 4</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-md-4 col-lg-3 col-xl-3">
+                <div class="col-md-4" align="center">
                     <h5>Contact</h5>
                     <br />
                     <ul class="list-unstyled">
-                        <li><i class="fa fa-home mr-2"></i> My company</li>
-                        <li><i class="fa fa-envelope mr-2"></i> email@example.com</li>
+                        <li><i class="fa fa-home mr-2"></i> BookTrade</li>
+                        <li><i class="fa fa-envelope mr-2"></i> contact@booktrade.com</li>
                         <li><i class="fa fa-phone mr-2"></i> + 33 12 14 15 16</li>
                         <li><i class="fa fa-print mr-2"></i> + 33 12 14 15 16</li>
                     </ul>
+                </div>
+
+                <div class="col-md-5" align="center">
+                    <p><strong>We accept these payment methods</strong></p>
+                    <br />
+                    <img src="~/Images/cards.jpg" class="img-fluid" />
+                    <br />
+                    <p>© 2018 BookTrade Ltd.</p>
                 </div>
             </div>
         </div>

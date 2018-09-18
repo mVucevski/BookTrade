@@ -21,7 +21,7 @@ namespace IT_BookTrade.Controllers
             var tmp = db.Chat.FirstOrDefault(x => x.ChatId == Id);
             if (tmp != null)
             {
-                if(!(tmp.User1.Equals(User.Identity.Name) || tmp.User2.Equals(User.Identity.Name))){
+                if(!(tmp.User1.Equals(User.Identity.Name) || tmp.User2.Equals(User.Identity.Name)) || User.Identity.Name.Length < 1){
                     return RedirectToAction("Index", "Books", new { });
                 }
                 ApplicationUser contactedUser;

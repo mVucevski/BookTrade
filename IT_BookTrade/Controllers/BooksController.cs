@@ -14,6 +14,8 @@ namespace IT_BookTrade.Controllers
     public class BooksController : Controller
     {
         private BookContext db = new BookContext();
+        private ApplicationDbContext usersDB = new ApplicationDbContext();
+
         public static List<Book> shoppingCart = new List<Book>();
 
         private void AddBooksToBag(ShoppingCart cart)
@@ -333,6 +335,12 @@ namespace IT_BookTrade.Controllers
             }
 
             updateCartIcon();
+
+            var seller = usersDB.Users.Where(x => x.Email.Equals(book.SellerEmail)).FirstOrDefault();
+            ViewBag.SellerName = seller.FirstName + " " + seller.LastName;
+
+
+
             return View(book);
         }
 
