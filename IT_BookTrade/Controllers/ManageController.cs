@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using IT_BookTrade.Models;
+using System.Collections.Generic;
 
 namespace IT_BookTrade.Controllers
 {
@@ -55,6 +56,7 @@ namespace IT_BookTrade.Controllers
         // GET: /Manage/Offers
         public ActionResult Offers()
         {
+            updateCartIcon();
             return View(db.Books.ToList().Where(x => x.SellerEmail.Equals(User.Identity.Name)).ToList());
         }
 
@@ -62,6 +64,7 @@ namespace IT_BookTrade.Controllers
         // GET: /Manage/Index
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
+            updateCartIcon();
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
@@ -343,7 +346,34 @@ namespace IT_BookTrade.Controllers
             base.Dispose(disposing);
         }
 
-#region Helpers
+        private void updateCartIcon()
+        {
+            var userShoppingCart = db.ShoppingCart.Where(x => x.UserEmail.Equals(User.Identity.Name)).FirstOrDefault();
+
+            if (userShoppingCart != null && User.Identity.Name.Trim().Length > 0)
+            {
+                ViewBag.TotalBooksInCart = userShoppingCart.ShoppingCartItems.Count;
+                AddBooksToBag(userShoppingCart);
+            }
+            else
+            {
+                ViewBag.TotalBooksInCart = 0;
+                List<int> bookIDs = new List<int>();
+                ViewBag.BookIDs = bookIDs;
+            }
+        }
+
+        private void AddBooksToBag(ShoppingCart cart)
+        {
+            List<int> bookIDs = new List<int>();
+            foreach (ShoppingCartItem item in cart.ShoppingCartItems)
+            {
+                bookIDs.Add(item.Book.ID);
+            }
+            ViewBag.BookIDs = bookIDs;
+        }
+
+        #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 

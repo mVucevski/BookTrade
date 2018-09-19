@@ -31,7 +31,7 @@
                     <div class="float-left float-md-right float-sm-left float-xl-right float-lg-right">
                         @if (User.Identity.IsAuthenticated)
                         {
-                            @Html.ActionLink("Create", "Create", new { }, new { @class = "btn btn-outline-secondary my-1 my-sm-1 create-btn" })
+                            @Html.ActionLink("Create", "Create", "Books", new { }, new { @class = "btn btn-outline-secondary my-1 my-sm-1 create-btn" })
                         }
                         <i class="fa fa-heart pl-4 navIcons add-pointer" onclick="location.href='@Url.Action("Index", "Wishlist")'">
                             <strong style="font-size:15px;display:flex;">Wishlist</strong>

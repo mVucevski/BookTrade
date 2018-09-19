@@ -59,6 +59,7 @@ namespace IT_BookTrade.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult AddUserToRole()
         {
+            updateCartIcon();
             AddToRoleModel model = new AddToRoleModel();
             model.roles = new List<string>() { "User", "Publisher", "Admin" };
             return View(model);
@@ -71,7 +72,7 @@ namespace IT_BookTrade.Controllers
         public ActionResult AddUserToRole(AddToRoleModel model)
         {
             var email = model.Email;
-            
+            updateCartIcon();
             if (email != null)
             {
                 var user = UserManager.FindByEmail(model.Email);
@@ -523,7 +524,33 @@ namespace IT_BookTrade.Controllers
 
             base.Dispose(disposing);
         }
+        private void updateCartIcon()
+        {
+            BookContext db = new BookContext();
+            var userShoppingCart = db.ShoppingCart.Where(x => x.UserEmail.Equals(User.Identity.Name)).FirstOrDefault();
 
+            if (userShoppingCart != null && User.Identity.Name.Trim().Length > 0)
+            {
+                ViewBag.TotalBooksInCart = userShoppingCart.ShoppingCartItems.Count;
+                AddBooksToBag(userShoppingCart);
+            }
+            else
+            {
+                ViewBag.TotalBooksInCart = 0;
+                List<int> bookIDs = new List<int>();
+                ViewBag.BookIDs = bookIDs;
+            }
+        }
+
+        private void AddBooksToBag(ShoppingCart cart)
+        {
+            List<int> bookIDs = new List<int>();
+            foreach (ShoppingCartItem item in cart.ShoppingCartItems)
+            {
+                bookIDs.Add(item.Book.ID);
+            }
+            ViewBag.BookIDs = bookIDs;
+        }
         #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";

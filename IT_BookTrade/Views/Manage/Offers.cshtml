@@ -15,9 +15,6 @@
             @Html.DisplayNameFor(model => model.BookAuthor)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.BookDescription)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Description)
         </th>
         <th>
@@ -35,9 +32,6 @@
         <th>
             @Html.DisplayNameFor(model => model.ISBN)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SellerEmail)
-        </th>
         <th></th>
     </tr>
 
@@ -50,13 +44,10 @@
             @Html.DisplayFor(modelItem => item.BookAuthor)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.BookDescription)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.Description)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ImagePath)
+            <img height="60" src="@Url.Content(item.ImagePath)" />
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Rating)
@@ -71,12 +62,9 @@
             @Html.DisplayFor(modelItem => item.ISBN)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.SellerEmail)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Books/Edit", new { id=item.ID })
-            @Html.ActionLink("Details", "Books/Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Books/Delete", new { id=item.ID })
+            @Html.ActionLink("Edit", "Edit", "Books", new { id=item.ID }, new { }) |
+            @Html.ActionLink("Details", "Details", "Books", new { id=item.ID }, new { }) |
+            @Html.ActionLink("Delete", "Delete", "Books", new { id=item.ID }, new { })
         </td>
     </tr>
 }

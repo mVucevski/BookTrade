@@ -19,8 +19,8 @@ namespace IT_BookTrade.Controllers
         public ActionResult Index()
         {
             var wishlist = db.Wishlist.Where(x => x.UserEmail.Equals(User.Identity.Name)).ToList();
-
-            if(wishlist == null) System.Diagnostics.Debug.WriteLine("Wisghlist: null");
+            updateCartIcon();
+            if (wishlist == null) System.Diagnostics.Debug.WriteLine("Wisghlist: null");
             /*
          //   System.Diagnostics.Debug.WriteLine("Count: " + wishlist.Count);
            // System.Diagnostics.Debug.WriteLine("Item1: " + wishlist.First().UserEmail);
@@ -37,12 +37,6 @@ namespace IT_BookTrade.Controllers
             return View(wishlist);
         }
 
-
-        // GET: Wishlist/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
        
         public ActionResult RemoveFromWishlist(int id)
         {
@@ -64,6 +58,33 @@ namespace IT_BookTrade.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private void updateCartIcon()
+        {
+            var userShoppingCart = db.ShoppingCart.Where(x => x.UserEmail.Equals(User.Identity.Name)).FirstOrDefault();
+
+            if (userShoppingCart != null && User.Identity.Name.Trim().Length > 0)
+            {
+                ViewBag.TotalBooksInCart = userShoppingCart.ShoppingCartItems.Count;
+                AddBooksToBag(userShoppingCart);
+            }
+            else
+            {
+                ViewBag.TotalBooksInCart = 0;
+                List<int> bookIDs = new List<int>();
+                ViewBag.BookIDs = bookIDs;
+            }
+        }
+
+        private void AddBooksToBag(ShoppingCart cart)
+        {
+            List<int> bookIDs = new List<int>();
+            foreach (ShoppingCartItem item in cart.ShoppingCartItems)
+            {
+                bookIDs.Add(item.Book.ID);
+            }
+            ViewBag.BookIDs = bookIDs;
         }
     }
 }

@@ -38,7 +38,7 @@
                                 </div>
                             </div>
                         </a>
-                        @if (book.SellerEmail.Equals(User.Identity.Name))
+                        @if (book.SellerEmail.Equals(User.Identity.Name) || book.Amount < 1)
                         {
                             <div class="card-footer" style="height:100%">
                                 </div>

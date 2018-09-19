@@ -19,6 +19,7 @@ namespace IT_BookTrade.Controllers
         public ActionResult Index(int Id)
         {
             var tmp = db.Chat.FirstOrDefault(x => x.ChatId == Id);
+            updateCartIcon();
             if (tmp != null)
             {
                 if(!(tmp.User1.Equals(User.Identity.Name) || tmp.User2.Equals(User.Identity.Name)) || User.Identity.Name.Length < 1){
@@ -55,10 +56,10 @@ namespace IT_BookTrade.Controllers
         [HttpPost]
         public ActionResult SendMsg(int ChatId, string Msg)
         {
-             //System.Diagnostics.Debug.WriteLine("ChatID " + ChatId);
-             //System.Diagnostics.Debug.WriteLine("Msg " + Msg);
+            //System.Diagnostics.Debug.WriteLine("ChatID " + ChatId);
+            //System.Diagnostics.Debug.WriteLine("Msg " + Msg);
 
-
+            updateCartIcon();
             var chat = db.Chat.Find(ChatId);
             if(chat != null)
             {
@@ -80,6 +81,7 @@ namespace IT_BookTrade.Controllers
             List<InboxItem> inboxList = new List<InboxItem>();
             var chatsCheck = db.Chat.Where(x => x.User1.Equals(User.Identity.Name) || x.User2.Equals(User.Identity.Name));
             List<Chat> chats = null;
+            updateCartIcon();
 
             if (chatsCheck.Any())
             {
@@ -146,19 +148,6 @@ namespace IT_BookTrade.Controllers
             return View(inboxList);
         }
 
-
-        private void newMsg(int id, string msg, bool by) {
-
-            db.Chat.Find(id).Messages.Add(new ChatMessages() {
-                Message = msg,
-                Date = DateTime.Now,
-                PostedBy = by
-            });
-
-            db.SaveChanges();
-        }
-
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -166,6 +155,33 @@ namespace IT_BookTrade.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private void updateCartIcon()
+        {
+            var userShoppingCart = db.ShoppingCart.Where(x => x.UserEmail.Equals(User.Identity.Name)).FirstOrDefault();
+
+            if (userShoppingCart != null && User.Identity.Name.Trim().Length > 0)
+            {
+                ViewBag.TotalBooksInCart = userShoppingCart.ShoppingCartItems.Count;
+                AddBooksToBag(userShoppingCart);
+            }
+            else
+            {
+                ViewBag.TotalBooksInCart = 0;
+                List<int> bookIDs = new List<int>();
+                ViewBag.BookIDs = bookIDs;
+            }
+        }
+
+        private void AddBooksToBag(ShoppingCart cart)
+        {
+            List<int> bookIDs = new List<int>();
+            foreach (ShoppingCartItem item in cart.ShoppingCartItems)
+            {
+                bookIDs.Add(item.Book.ID);
+            }
+            ViewBag.BookIDs = bookIDs;
         }
     }
 }

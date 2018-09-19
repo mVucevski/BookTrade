@@ -20,8 +20,9 @@
             </div>
             <div class="col-md-6">
                 <p class="lh"><strong>By (author) </strong>@Html.DisplayFor(model => model.BookAuthor)</p>
-                <p class="lh"><strong>Language: </strong> English/Macedonian/...etc (to be implemented)</p>
-                <p class="lh"><strong>@Html.DisplayNameFor(model => model.ISBN): </strong>@Html.DisplayFor(model => model.ISBN)</p>
+                <p class="lh"><strong>Language: </strong> @Html.DisplayFor(model => model.Language)</p>
+                <p class="lh"><strong>ISBN: </strong>@Html.DisplayFor(model => model.ISBN)</p>
+                <p class="lh"><strong>Category: </strong> @Html.DisplayFor(model => model.Category)</p>
                 <p class="lh"><strong>Available for Trade: </strong> @(Model.Tradeable ? "Yes" : "No") </p>
                 <div class="lh"><strong>Rating:</strong>
                     <div class="star-ratings-sprite"><span style="width:@(Model.Rating*20)%" class="star-ratings-sprite-rating"></span></div>
@@ -37,35 +38,49 @@
 
             <div class="col-md-3" style="border:1px solid silver;border-radius:20px;height:400px;">
                 <strong style="color:#28a745;">Price: </strong>  <span style="color:#28a745;font-size:30px;font-weight:bold;">$@Html.DisplayFor(model => model.Price)</span>
-                
-                <p style="font-size:25px"><i class="fa fa-check-circle-o" aria-hidden="true"></i> Available</p>
-                <div>
-                    @if (!User.Identity.Name.Equals(Model.SellerEmail))
-                    {
-                    if ((ViewBag.BookIDs as List<int>).Contains(Model.ID))
-                    {
-                        @Html.ActionLink("In Cart", "RemoveFromCartDetails", new { id = Model.ID }, new { @class = "btn btn-block btn-danger" })
-                    }
-                    else
-                    {
-                        @Html.ActionLink("Add to Cart", "AddToCartDetails", new { id = Model.ID }, new { @class = "btn btn-block btn-success" })
-                    }
-                    }
+               
+                @if (Model.Amount > 0)
+                {
+                    <div>
+                        <p style="font-size:25px"><i class="fa fa-check-circle-o" aria-hidden="true"></i> Available</p>
 
-                    @if (!User.Identity.Name.Equals(Model.SellerEmail))
+                        @if (!User.Identity.Name.Equals(Model.SellerEmail))
+                        {
+                            if ((ViewBag.BookIDs as List<int>).Contains(Model.ID))
+                            {
+                                @Html.ActionLink("In Cart", "RemoveFromCartDetails", new { id = Model.ID }, new { @class = "btn btn-block btn-danger" })
+                            }
+                            else
+                            {
+                                @Html.ActionLink("Add to Cart", "AddToCartDetails", new { id = Model.ID }, new { @class = "btn btn-block btn-success" })
+                            }
+                        }
+
+                        @if (!User.Identity.Name.Equals(Model.SellerEmail))
+                        {
+                            @Html.ActionLink("Add to Wishlist", "AddToWishlistDetails", new { id = Model.ID }, new { @class = "btn btn-block btn-danger" })
+                        }
+                        @if (Model.Tradeable && !User.Identity.Name.Equals(Model.SellerEmail))
+                        {
+                            @Html.ActionLink("Trade", "TradeContact", new { user = Model.SellerEmail }, new { @class = "btn btn-block btn-info" })
+                        }
+                    </div>
+                }
+                else
+                {
+                    <p style="font-size:25px"><i class="fa fa-times" aria-hidden="true"></i> Not Available</p>
+                    if (!User.Identity.Name.Equals(Model.SellerEmail))
                     {
                         @Html.ActionLink("Add to Wishlist", "AddToWishlistDetails", new { id = Model.ID }, new { @class = "btn btn-block btn-danger" })
                     }
-                    @if (Model.Tradeable && !User.Identity.Name.Equals(Model.SellerEmail))
-                    {
-                        @Html.ActionLink("Trade", "TradeContact", new { user = Model.SellerEmail }, new { @class = "btn btn-block btn-info" })
-                    }
+                }
+
                     @if (User.Identity.Name.Equals(Model.SellerEmail) || User.IsInRole("Admin"))
                     {
                         @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class = "btn btn-block btn-secondary" })
                         @Html.ActionLink("Delete", "Delete", new { id = Model.ID }, new { @class = "btn btn-block btn-danger" })
                     }
-                </div>                                                                                   
+                                                                                                 
             </div>
         </div>
 </div>

@@ -16,13 +16,21 @@ namespace IT_BookTrade.Models
         public string Title { get; set; }
 
         [Required]
+        [DisplayName("Author")]
         public string BookAuthor { get; set; }
 
+        [Required]
+        [DisplayName("Language")]
+        public string Language { get; set; }
+
+        [DisplayName("Description")]
         public string BookDescription { get; set; }
 
+        [DisplayName("Condition")]
+        [DefaultValue("Brand New")]
         public string Description { get; set; }
 
-        [DisplayName("UploadImage")]
+        [DisplayName("Cover")]
         public string ImagePath { get; set; }
 
         [NotMapped]
@@ -37,10 +45,21 @@ namespace IT_BookTrade.Models
         public double Price { get; set; }
 
         [Required]
+        public int Amount { get; set; }
+
+        [DisplayName("Books Sold")]
+        public int BooksSold { get; set; }
+
+        [Required]
+        public string Category { get; set; }
+
+        [Required]
+        [DisplayName("Available for trade")]
         public bool Tradeable { get; set; }
 
         public string ISBN { get; set; }
 
+        [DisplayName("Seller")]
         public string SellerEmail { get; set; }
     }
 }

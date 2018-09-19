@@ -99,6 +99,7 @@ namespace IT_BookTrade.Controllers
         public ActionResult ShoppingCart()
         {
             var cartItems = db.ShoppingCart.Where(x => x.UserEmail.Equals(User.Identity.Name)).FirstOrDefault();
+
             ViewBag.TotalPrice = cartItems.TotalPrice;
             updateCartIcon();
             return View(cartItems.ShoppingCartItems);
@@ -353,6 +354,7 @@ namespace IT_BookTrade.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Title,ImagePath,ImageFile,Rating,BookAuthor,BookDescription,Description,Price,Tradeable,ISBN")] Book book)
         {
+            updateCartIcon();
             if (ModelState.IsValid)
             {
                 saveImage(book);
@@ -386,6 +388,7 @@ namespace IT_BookTrade.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Book book = db.Books.Find(id);
+            updateCartIcon();
             if (book == null)
             {
                 return HttpNotFound();
@@ -410,6 +413,7 @@ namespace IT_BookTrade.Controllers
         {
             System.Diagnostics.Debug.WriteLine("Slika " + ImagePath);
             book.ImagePath = ImagePath;
+            updateCartIcon();
 
             if (ModelState.IsValid)
             {           
@@ -429,6 +433,7 @@ namespace IT_BookTrade.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Book book = db.Books.Find(id);
+            updateCartIcon();
             if (book == null)
             {
                 return HttpNotFound();
@@ -498,6 +503,8 @@ namespace IT_BookTrade.Controllers
 
             foreach(var x in shopingItems)
             {
+                x.Book.BooksSold += 1;
+                x.Book.Amount -= 1;
                 orderItems.Add(new OrderItem()
                 {
                     BookTitle = x.Book.Title,
@@ -565,7 +572,7 @@ namespace IT_BookTrade.Controllers
             }
 
 
-
+            updateCartIcon();
             return RedirectToAction("Index", "Chat", new { Id = tmp.ChatId });
         }
 

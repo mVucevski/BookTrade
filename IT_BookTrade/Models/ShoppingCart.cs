@@ -12,5 +12,10 @@ namespace IT_BookTrade.Models
         public double TotalPrice { get; set; }
         public string DiscountCode { get; set; }
         public virtual List<ShoppingCartItem> ShoppingCartItems { get; set; }
+
+        public static implicit operator ShoppingCart(List<ShoppingCart> v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
