@@ -6,6 +6,14 @@ using System;
 
 namespace IT_BookTrade.Models
 {
+    public class AddToRoleModel
+    {
+        [Required]
+        public string Email { get; set; }
+        public List<string> roles { get; set; }
+        public string selectedRole { get; set; }
+    }
+
     public class IndexViewModel
     {
         public bool HasPassword { get; set; }

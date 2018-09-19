@@ -55,6 +55,38 @@ namespace IT_BookTrade.Controllers
         }
 
         //
+        // GET: /Account/AddUserToRole
+        [Authorize(Roles = "Admin")]
+        public ActionResult AddUserToRole()
+        {
+            AddToRoleModel model = new AddToRoleModel();
+            model.roles = new List<string>() { "User", "Publisher", "Admin" };
+            return View(model);
+        }
+
+        //
+        // POST: /Account/AddUserToRole
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public ActionResult AddUserToRole(AddToRoleModel model)
+        {
+            var email = model.Email;
+            
+            if (email != null)
+            {
+                var user = UserManager.FindByEmail(model.Email);
+                if (user != null)
+                {
+                    var roles = UserManager.GetRoles(user.Id);
+                    UserManager.RemoveFromRoles(user.Id, roles.ToArray());
+                    UserManager.AddToRole(user.Id, model.selectedRole);
+                }
+            }
+            
+            return RedirectToAction("AddUserToRole", "Account");
+        }
+
+        //
         // GET: /Account/Login
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)

@@ -15,6 +15,7 @@ namespace IT_BookTrade.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private BookContext db = new BookContext();
 
         public ManageController()
         {
@@ -51,6 +52,13 @@ namespace IT_BookTrade.Controllers
         }
 
         //
+        // GET: /Manage/Offers
+        public ActionResult Offers()
+        {
+            return View(db.Books.ToList().Where(x => x.SellerEmail.Equals(User.Identity.Name)).ToList());
+        }
+
+        //
         // GET: /Manage/Index
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
@@ -71,8 +79,9 @@ namespace IT_BookTrade.Controllers
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
-                lastLogin = UserManager.FindById(userId).lastLogin
+                lastLogin = UserManager.FindById(userId).lastLogin,
             };
+
             return View(model);
         }
 

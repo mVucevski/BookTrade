@@ -98,11 +98,6 @@ namespace IT_BookTrade.Controllers
         [Authorize]
         public ActionResult ShoppingCart()
         {
-            // ViewBag.TotalBooksInCart = shoppingCart.Count;
-            // ViewBag.TotalCostOfCart = TotalCostOfCart();
-
-
-
             var cartItems = db.ShoppingCart.Where(x => x.UserEmail.Equals(User.Identity.Name)).FirstOrDefault();
             ViewBag.TotalPrice = cartItems.TotalPrice;
             updateCartIcon();
@@ -209,8 +204,7 @@ namespace IT_BookTrade.Controllers
             {
                 return RedirectToAction("Index");
             }
-
-
+            
             var wishlistItem = db.Wishlist.Where(x => x.UserEmail.Equals(User.Identity.Name) && x.Book.ID == id).FirstOrDefault();
 
             if (wishlistItem == null)
@@ -222,7 +216,7 @@ namespace IT_BookTrade.Controllers
                 });
                 db.SaveChanges();
             }
-    
+
             return RedirectToAction("Details", new { id });
         }
 
@@ -348,7 +342,7 @@ namespace IT_BookTrade.Controllers
         [Authorize]
         public ActionResult Create()
         {
-            ViewBag.TotalBooksInCart = shoppingCart.Count;
+            updateCartIcon();
             return View();
         }
 
@@ -445,7 +439,6 @@ namespace IT_BookTrade.Controllers
                 return View(book);
             }
 
-
             return RedirectToAction("Index");
         }
 
@@ -465,7 +458,6 @@ namespace IT_BookTrade.Controllers
         public ActionResult CheckOut()
         {
             updateCartIcon();
-            // ViewBag.TotalBooksInCart = shoppingCart.Count;
             ViewBag.TotalCostOfCart = TotalCostOfCart();
             return View();
         }
@@ -488,11 +480,8 @@ namespace IT_BookTrade.Controllers
                 };
                 db.Order.Add(ORDER);
             }
-
-
-
+            
             checkoutDetails.ExpDate = mm + "/" + checkoutDetails.ExpDate;
-
 
             var uniqueId = (ORDER.OrdersDetails.Count + 1).ToString();
 
@@ -519,13 +508,11 @@ namespace IT_BookTrade.Controllers
             checkoutDetails.OrderItems = orderItems;
 
             ORDER.OrdersDetails.Add(checkoutDetails);
-
             
             db.SaveChanges();
-
-
-
+            
             ClearCart();
+            updateCartIcon();
             return RedirectToAction("OrderSummary", "Books", new { id = checkoutDetails.InvoiceID });
             //System.Diagnostics.Debug.WriteLine("MMMM " + mm);
         }
@@ -555,6 +542,7 @@ namespace IT_BookTrade.Controllers
             else
             {
                 ViewBag.TotalCost = order.OrderItems.Sum(x => x.BookPrice);
+                updateCartIcon();
                 return View(order);
             }
 
