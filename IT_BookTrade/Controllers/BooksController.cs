@@ -474,7 +474,7 @@ namespace IT_BookTrade.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Title,ImagePath,ImageFile,Rating,BookAuthor,BookDescription,Description,Price,Tradeable,ISBN")] Book book)
+        public ActionResult Create([Bind(Include = "ID,Title,ImagePath,ImageFile,Rating,BookAuthor,BookDescription,Description,Price,Tradeable,ISBN,Category,Language,Amount")] Book book)
         {
             updateCartIcon();
             if (ModelState.IsValid)
@@ -531,7 +531,7 @@ namespace IT_BookTrade.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Title,ImagePath,ImageFile,Rating,BookAuthor,BookDescription,Description,Price,Tradeable,ISBN,SellerEmail")] Book book, string ImagePath)
+        public ActionResult Edit([Bind(Include = "ID,Title,ImagePath,ImageFile,Rating,BookAuthor,BookDescription,Description,Price,Tradeable,ISBN,SellerEmail,Category,Language,Amount")] Book book, string ImagePath)
         {
             System.Diagnostics.Debug.WriteLine("Slika " + ImagePath);
             book.ImagePath = ImagePath;
