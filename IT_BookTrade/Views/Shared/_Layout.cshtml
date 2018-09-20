@@ -54,26 +54,28 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav" style="font-weight: bold;">
                     <li class="nav-item">
-                        <a class="nav-link" href="about.html">Bestsellers</a>
+                        <a class="nav-link" href="@Url.Action("Bestsellers", "Books", new {  }, null)" style="text-decoration:none">Bestsellers</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="services.html">Coming Soon</a>
+                        <a class="nav-link" href="@Url.Action("LatestDeals", "Books", new {  }, null)" style="text-decoration:none">Latest Deals</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Highlights</a>
+                        <a class="nav-link" href="@Url.Action("TradeSection", "Books", new {  }, null)" style="text-decoration:none">Trade Section</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Trade Section</a>
+                        <a class="nav-link" href="@Url.Action("SurpriseMe", "Books", new {  }, null)" style="text-decoration:none">Surprise Me</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Shop by category
+                            Search by category
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-                            <a class="dropdown-item" href="portfolio-1-col.html">1 Shop by category</a>
-                            <a class="dropdown-item" href="portfolio-2-col.html">2 Shop by category</a>
-                            <a class="dropdown-item" href="portfolio-3-col.html">3 Shop by category</a>
-                            <a class="dropdown-item" href="portfolio-4-col.html">4 Shop by category</a>
+                            <a class="dropdown-item" href="@Url.Action("Fiction", "Books", new {  }, null)">Fiction</a>
+                            <a class="dropdown-item" href="@Url.Action("NonFiction", "Books", new {  }, null)">Non-Fiction</a>
+                            <a class="dropdown-item" href="@Url.Action("CrimeThriller", "Books", new {  }, null)">Crime & Thriller</a>
+                            <a class="dropdown-item" href="@Url.Action("Fantasy", "Books", new {  }, null)">Fantasy</a>
+                            <a class="dropdown-item" href="@Url.Action("History", "Books", new {  }, null)">History</a>
+                            <a class="dropdown-item" href="@Url.Action("FoodDrink", "Books", new {  }, null)">Food & Drink</a>
                         </div>
                     </li>
                 </ul>

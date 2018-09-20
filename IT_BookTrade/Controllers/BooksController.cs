@@ -100,6 +100,16 @@ namespace IT_BookTrade.Controllers
         {
             var cartItems = db.ShoppingCart.Where(x => x.UserEmail.Equals(User.Identity.Name)).FirstOrDefault();
 
+            var soldOutBooks = cartItems.ShoppingCartItems.Where(item => item.Book.Amount < 1);
+            if (soldOutBooks != null)
+            {
+                var soldOutBooksList = soldOutBooks.ToList();
+                db.ShoppingCartItems.RemoveRange(soldOutBooksList);
+                cartItems.ShoppingCartItems.RemoveAll(item => item.Book.Amount < 1);
+            }
+
+
+            db.SaveChanges();
             ViewBag.TotalPrice = cartItems.TotalPrice;
             updateCartIcon();
             return View(cartItems.ShoppingCartItems);
@@ -313,7 +323,119 @@ namespace IT_BookTrade.Controllers
                 books = db.Books.ToList();
             }
 
-            return View(books);
+            ViewBag.PageName = "Search results for " + search;
+            return View(books.OrderBy(x=>x.Amount==0));
+        }
+
+        // GET: Books/Bestsellers
+        public ActionResult Bestsellers()
+        {
+            updateCartIcon();
+
+            var books = db.Books.Where(x=>x.Amount>0).ToList().OrderByDescending(x=>x.BooksSold).OrderBy(x => x.Amount == 0);
+
+            ViewBag.PageName = "Bestsellers";
+            return View("Search", books);
+        }
+
+        // GET: Books/LatestDeals
+        public ActionResult LatestDeals()
+        {
+            updateCartIcon();
+
+            var books = db.Books.Where(x => x.Amount > 0).ToList().OrderByDescending(x => x.ID);
+
+            ViewBag.PageName = "Latest Book Deals";
+            return View("Search", books);
+        }
+
+        // GET: Books/TradeSection
+        public ActionResult TradeSection()
+        {
+            updateCartIcon();
+
+            var books = db.Books.Where(x => x.Amount > 0 && x.Tradeable).ToList().OrderByDescending(x => x.ID);
+
+            ViewBag.PageName = "Trade Section";
+            return View("Search", books);
+        }
+
+        // GET: Books/TradeSection
+        public ActionResult SurpriseMe()
+        {
+            updateCartIcon();
+
+            var books = db.Books.Where(x => x.Amount > 0 && !x.SellerEmail.Equals(User.Identity.Name)).ToList();
+
+            var randomBook = books[new Random().Next(books.Count)];
+
+            return RedirectToAction("Details", new { id = randomBook.ID });
+        }
+
+        // GET: Books/Fiction
+        public ActionResult Fiction()
+        {
+            updateCartIcon();
+
+            var books = db.Books.Where(x => x.Amount > 0 && !x.SellerEmail.Equals(User.Identity.Name) && x.Category.Contains("Fiction")).ToList();
+
+            ViewBag.PageName = "Category Fiction";
+            return View("Search", books);
+        }
+
+        // GET: Books/NonFiction
+        public ActionResult NonFiction()
+        {
+            updateCartIcon();
+
+            var books = db.Books.Where(x => x.Amount > 0 && !x.SellerEmail.Equals(User.Identity.Name) && x.Category.Contains("Non-Fiction")).ToList();
+
+            ViewBag.PageName = "Category Non-Fiction";
+            return View("Search", books);
+        }
+
+        // GET: Books/CrimeThriller
+        public ActionResult CrimeThriller()
+        {
+            updateCartIcon();
+
+            var books = db.Books.Where(x => x.Amount > 0 && !x.SellerEmail.Equals(User.Identity.Name) && (x.Category.Contains("Crime") || x.Category.Contains("Thriller"))).ToList();
+
+            ViewBag.PageName = "Category Crime & Thriller";
+            return View("Search", books);
+        }
+
+        // GET: Books/FoodDrink
+        public ActionResult FoodDrink()
+        {
+            updateCartIcon();
+
+            var books = db.Books.Where(x => x.Amount > 0 && !x.SellerEmail.Equals(User.Identity.Name) && (x.Category.Contains("Drink") || x.Category.Contains("Food") || x.Category.Contains("Cook"))).ToList();
+
+            ViewBag.PageName = "Category Food & Drink";
+            return View("Search", books);
+        }
+
+        // GET: Books/Fantasy
+        public ActionResult Fantasy()
+        {
+            updateCartIcon();
+
+            var books = db.Books.Where(x => x.Amount > 0 && !x.SellerEmail.Equals(User.Identity.Name) && x.Category.Contains("Fantasy")).ToList();
+
+            ViewBag.PageName = "Category Fantasy";
+            return View("Search", books);
+        }
+
+        // GET: Books/History
+        public ActionResult History()
+        {
+            updateCartIcon();
+
+            var books = db.Books.Where(x => x.Amount > 0 && !x.SellerEmail.Equals(User.Identity.Name) && x.Category.Contains("History")).ToList();
+
+            ViewBag.PageName = "Category History";
+            return View("Search", books);
         }
 
         // GET: Books/Details/5
@@ -505,6 +627,7 @@ namespace IT_BookTrade.Controllers
             {
                 x.Book.BooksSold += 1;
                 x.Book.Amount -= 1;
+                
                 orderItems.Add(new OrderItem()
                 {
                     BookTitle = x.Book.Title,
