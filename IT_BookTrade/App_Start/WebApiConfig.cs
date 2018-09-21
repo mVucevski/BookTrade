@@ -16,8 +16,8 @@ namespace IT_BookTrade
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+                routeTemplate: "api/{controller}/{option}/{id}",
+                defaults: new { option = RouteParameter.Optional, id = RouteParameter.Optional}
             );
         }
     }

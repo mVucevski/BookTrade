@@ -24,7 +24,8 @@
                 <p class="lh"><strong>ISBN: </strong>@Html.DisplayFor(model => model.ISBN)</p>
                 <p class="lh"><strong>Category: </strong> @Html.DisplayFor(model => model.Category)</p>
                 <p class="lh"><strong>Available for Trade: </strong> @(Model.Tradeable ? "Yes" : "No") </p>
-                <div class="lh"><strong>Rating:</strong>
+                <div class="lh">
+                    <strong>Rating:</strong>
                     <div class="star-ratings-sprite"><span style="width:@(Model.Rating*20)%" class="star-ratings-sprite-rating"></span></div>
                     <span>  @Html.DisplayFor(model => model.Rating)/5</span>
                 </div>
@@ -38,11 +39,11 @@
 
             <div class="col-md-3" style="border:1px solid silver;border-radius:20px;height:400px;">
                 <strong style="color:#28a745;">Price: </strong>  <span style="color:#28a745;font-size:30px;font-weight:bold;">$@Html.DisplayFor(model => model.Price)</span>
-               
+
                 @if (Model.Amount > 0)
                 {
                     <div>
-                        <p style="font-size:25px"><i class="fa fa-check-circle-o" aria-hidden="true"></i> Available</p>
+                        <p style="font-size:25px"><i class="fa fa-check-circle-o" aria-hidden="true"></i> Available: @Model.Amount Left</p>
 
                         @if (!User.Identity.Name.Equals(Model.SellerEmail))
                         {
@@ -75,12 +76,12 @@
                     }
                 }
 
-                    @if (User.Identity.Name.Equals(Model.SellerEmail) || User.IsInRole("Admin"))
-                    {
-                        @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class = "btn btn-block btn-secondary" })
-                        @Html.ActionLink("Delete", "Delete", new { id = Model.ID }, new { @class = "btn btn-block btn-danger" })
-                    }
-                                                                                                 
+                @if (User.Identity.Name.Equals(Model.SellerEmail) || User.IsInRole("Admin"))
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class = "btn btn-block btn-secondary" })
+                    @Html.ActionLink("Delete", "Delete", new { id = Model.ID }, new { @class = "btn btn-block btn-danger" })
+                }
+
             </div>
         </div>
 </div>
