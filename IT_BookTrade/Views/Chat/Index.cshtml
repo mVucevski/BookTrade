@@ -4,6 +4,11 @@
     ViewBag.Title = "Chat";
 }
 
+@{ 
+    var tmp = 1;
+}
+
+
 <h3 class=" text-center">Messaging</h3>
 <hr>
 <h3 class="username-top">@ViewBag.UserName</h3>
@@ -13,6 +18,7 @@
             <div class="msg_history" id="msg_history">
                 @foreach (var msg in Model.Messages)
                 {
+                    //tmp = msg.ChatMessagesId;
                     if (msg.PostedBy != ViewBag.LoggedInUser)
                     {
                         <div class="incoming_msg">
@@ -60,7 +66,40 @@
 {
     
     <script>
+        var lastMsgIndex = @Model.Messages.Last().ChatMessagesId;
+        function checkNewMsg( )
+        {
+            $.ajax({
+                url: "/api/ChatAPI/" + @Model.ChatId + "/" + lastMsgIndex,
+                method: "GET",
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    console.log(data['Message']);
+
+                    lastMsgIndex = data['ChatMessagesId'];
+                    var dateString = data['Date'];
+
+                    var jsDate = convertDate(dateString);
+
+                    var div = document.createElement('div');
+
+                    div.innerHTML ='<div class="incoming_msg"><div class="received_msg"><div class="received_withd_msg"><p>' + data['Message'] + '</p><span class="time_date">' +  jsDate + '</span></div></div></div>';
+                    document.getElementById('msg_history').appendChild(div);
+
+                    var scrollBottom = document.getElementById("msg_history");
+                    scrollBottom.scrollTop = scrollBottom.scrollHeight;
+
+                }
+            });
+        }
+
         $(document).ready(function () {
+
+            var scrollBottom = document.getElementById("msg_history");
+            scrollBottom.scrollTop = scrollBottom.scrollHeight;
+
+            setInterval(checkNewMsg, 1000);
 
             $(document).on("click", ".api-send-msg", function () {
                 var button = $(this);
@@ -68,32 +107,53 @@
 
                 var dataJSON =
                     { Message: inputMsg.val(),
-                      ChatId: @Model.ChatId,
+                        ChatId: @Model.ChatId,
                     };
 
-                    $.ajax({
-                        //url: "/api/ChatAPI/" + Model.ChatId + "/" + inputMsg.val(),
-                        url: "/api/ChatAPI/",
-                        method: "POST",
-                        data: JSON.stringify(dataJSON),
-                        contentType: 'application/json; charset=utf-8',
-                        dataType: 'json',
-                        success: function () {
-                            var jsDate = "@DateTime.Now.ToString()";                
-                            var addMsg =  '<div class="outgoing_msg"><div class="sent_msg"><p>' + inputMsg.val() + '</p><span class="time_date">' +  jsDate + '</span></div></div>';
-                            
-                            
-                            var div = document.createElement('div');
 
-                            div.innerHTML ='<div class="outgoing_msg"><div class="sent_msg"><p>' + inputMsg.val() + '</p><span class="time_date">' +  jsDate + '</span></div></div>';
-                            document.getElementById('msg_history').appendChild(div);
 
-                            var scrollBottom = document.getElementById("msg_history");
-                            scrollBottom.scrollTop = scrollBottom.scrollHeight;
-                        }
-                    });
+                $.ajax({
+                    url: "/api/ChatAPI/",
+                    method: "POST",
+                    data: JSON.stringify(dataJSON),
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    success: function () {
+                        lastMsgIndex += 1;
+                        var jsDate = "@DateTime.Now.ToString()";
+                        var addMsg =  '<div class="outgoing_msg"><div class="sent_msg"><p>' + inputMsg.val() + '</p><span class="time_date">' +  jsDate + '</span></div></div>';
+
+
+                        var div = document.createElement('div');
+
+                        div.innerHTML ='<div class="outgoing_msg"><div class="sent_msg"><p>' + inputMsg.val() + '</p><span class="time_date">' +  jsDate + '</span></div></div>';
+                        document.getElementById('msg_history').appendChild(div);
+
+                        var scrollBottom = document.getElementById("msg_history");
+                        scrollBottom.scrollTop = scrollBottom.scrollHeight;
+
+                        document.getElementById("Msg").value = "";
+                    }
+                });
 
             });
         });
+
+        function convertDate(dd){
+            var date = new Date(dd);
+            const monthNames = ["January", "February", "March", "April", "May", "June",
+                                "July", "August", "September", "October", "November", "December"];
+            //23-Sep-18 00:15:48
+
+            var day = date.getDate();       
+            var month = monthNames[date.getMonth()].substring(0, 3);    
+            var year = date.getFullYear();  
+            var hour = date.getHours();     
+            var minute = date.getMinutes(); 
+            var second = date.getSeconds(); 
+
+            return day + "-" + month + "-" + year + " " + hour + ':' + minute + ':' + second; 
+        }
+
     </script>
 }

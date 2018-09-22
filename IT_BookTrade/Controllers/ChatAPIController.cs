@@ -17,22 +17,42 @@ namespace IT_BookTrade.Controllers
         private BookContext db = new BookContext();
 
         // GET: api/ChatAPI
-        public IQueryable<ChatMessages> GetChatMessages()
-        {
-            return db.ChatMessages;
-        }
+        /* public IQueryable<ChatMessages> GetChatMessages()
+         {
+             return db.ChatMessages;
+         } */
 
         // GET: api/ChatAPI/5
+        [Route("api/ChatAPI/{ChatId}/{MsgId}")]
         [ResponseType(typeof(ChatMessages))]
-        public IHttpActionResult GetChatMessages(int id)
+        public IHttpActionResult GetChatMessages(int ChatId, int MsgId)
         {
-            ChatMessages chatMessages = db.ChatMessages.Find(id);
-            if (chatMessages == null)
+
+            ChatMessages newMsg = null;
+            var poraki = db.ChatMessages.Where(x => x.ChatId == ChatId);
+            if (poraki != null)
             {
-                return NotFound();
+                var list = poraki.ToList();
+
+                for(int z = 0; z<list.Count;z++)
+                {
+                    if (list[z].ChatMessagesId == MsgId)
+                    {
+                        if(z+1 != list.Count)
+                        {
+                            newMsg = list[z + 1];
+                        }
+                    }
+                }
+
+            }
+         
+            if (newMsg == null)
+            {
+                return Ok();
             }
 
-            return Ok(chatMessages);
+            return Ok(newMsg);
         }
 
         // PUT: api/ChatAPI/5
@@ -78,7 +98,7 @@ namespace IT_BookTrade.Controllers
         // POST
         public void Post(ChatMessagesData msgData)
         {
-            System.Diagnostics.Debug.WriteLine("ChatId1111111111111111111111 " + msgData.Message);
+           // System.Diagnostics.Debug.WriteLine("ChatId1111111111111111111111 " + msgData.Message);
 
             var chat = db.Chat.Find(msgData.ChatId);
             ChatMessages poraka = new ChatMessages()
