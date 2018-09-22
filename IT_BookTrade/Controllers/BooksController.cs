@@ -675,7 +675,7 @@ namespace IT_BookTrade.Controllers
 
             if (order == null)
             {
-                return RedirectToAction("Index", "Books");
+                return RedirectToAction("Index", "Manage");
             }
             else
             {
