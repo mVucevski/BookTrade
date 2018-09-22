@@ -19,6 +19,12 @@ namespace IT_BookTrade
                 routeTemplate: "api/{controller}/{option}/{id}",
                 defaults: new { option = RouteParameter.Optional, id = RouteParameter.Optional}
             );
+
+            config.Routes.MapHttpRoute(
+                name: "ChatApi2",
+                routeTemplate: "api/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional }
+            );
         }
     }
 }

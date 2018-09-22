@@ -28,5 +28,7 @@ namespace IT_BookTrade.Models
         public DbSet<Chat> Chat { get; set; }
 
         public System.Data.Entity.DbSet<IT_BookTrade.Models.Book> Books { get; set; }
+
+        public System.Data.Entity.DbSet<IT_BookTrade.Models.ChatMessages> ChatMessages { get; set; }
     }
 }

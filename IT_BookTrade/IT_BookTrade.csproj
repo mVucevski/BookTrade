@@ -213,6 +213,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BooksAPIController.cs" />
     <Compile Include="Controllers\BooksController.cs" />
+    <Compile Include="Controllers\ChatAPIController.cs" />
     <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />

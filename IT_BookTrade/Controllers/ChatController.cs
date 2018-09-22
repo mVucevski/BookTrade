@@ -53,6 +53,7 @@ namespace IT_BookTrade.Controllers
             return !User.Identity.Name.Equals(email);
         }
 
+        /*
         [HttpPost]
         public ActionResult SendMsg(int ChatId, string Msg)
         {
@@ -73,7 +74,7 @@ namespace IT_BookTrade.Controllers
 
             return RedirectToAction("Index", "Chat", new { Id = ChatId });
         }
-
+        */
         // GET: Inbox
         [Authorize]
         public ActionResult Inbox()

@@ -21,4 +21,10 @@ namespace IT_BookTrade.Models
         public bool PostedBy { get; set; }
         public int ChatId { get; set; }
     }
+
+    public class ChatMessagesData
+    {
+        public string Message { get; set; }
+        public int ChatId { get; set; }
+    }
 }

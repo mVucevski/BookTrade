@@ -10,7 +10,7 @@
 <div class="messaging">
     <div class="inbox_msg">
         <div class="mesgs">
-            <div class="msg_history">
+            <div class="msg_history" id="msg_history">
                 @foreach (var msg in Model.Messages)
                 {
                     if (msg.PostedBy != ViewBag.LoggedInUser)
@@ -44,12 +44,8 @@
             </div>
             <div class="type_msg">
                 <div class="input_msg_write">
-                    @using (Html.BeginForm("SendMsg", "Chat", FormMethod.Post))
-                    {
-                        @Html.HiddenFor(model => model.ChatId)
-                        <input type="text" class="write_msg" placeholder="Type a message" name="Msg" id="Msg" />
-                        <button class="msg_send_btn" type="submit" id="ChatId" value="ChatId">Send</button>
-                    }
+                    <input type="text" class="write_msg" placeholder="Type a message" name="Msg" id="Msg" />
+                    <button class="msg_send_btn api-send-msg" id="ChatId">Send</button>
                 </div>
             </div>
         </div>
@@ -58,4 +54,46 @@
 
 @section Styles {
     <link href="@Url.Content("~/Content/ChatStyleSheet.css")" rel="stylesheet" type="text/css" />
+}
+
+@section Scripts
+{
+    
+    <script>
+        $(document).ready(function () {
+
+            $(document).on("click", ".api-send-msg", function () {
+                var button = $(this);
+                var inputMsg = $('#Msg')
+
+                var dataJSON =
+                    { Message: inputMsg.val(),
+                      ChatId: @Model.ChatId,
+                    };
+
+                    $.ajax({
+                        //url: "/api/ChatAPI/" + Model.ChatId + "/" + inputMsg.val(),
+                        url: "/api/ChatAPI/",
+                        method: "POST",
+                        data: JSON.stringify(dataJSON),
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+                        success: function () {
+                            var jsDate = "@DateTime.Now.ToString()";                
+                            var addMsg =  '<div class="outgoing_msg"><div class="sent_msg"><p>' + inputMsg.val() + '</p><span class="time_date">' +  jsDate + '</span></div></div>';
+                            
+                            
+                            var div = document.createElement('div');
+
+                            div.innerHTML ='<div class="outgoing_msg"><div class="sent_msg"><p>' + inputMsg.val() + '</p><span class="time_date">' +  jsDate + '</span></div></div>';
+                            document.getElementById('msg_history').appendChild(div);
+
+                            var scrollBottom = document.getElementById("msg_history");
+                            scrollBottom.scrollTop = scrollBottom.scrollHeight;
+                        }
+                    });
+
+            });
+        });
+    </script>
 }
