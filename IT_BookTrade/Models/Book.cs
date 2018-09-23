@@ -36,8 +36,11 @@ namespace IT_BookTrade.Models
         [NotMapped]
         public HttpPostedFileBase ImageFile { get; set; }
 
-        [Range(1, 5)]
-        public double Rating { get; set; }
+        public int Ratings { get; set; }
+
+        public int RatingsSum { get; set; }
+
+        public double Rating { get { return (double)(Math.Round((Decimal)((double)RatingsSum/(double)Ratings),2)); } }
 
         [Required]
         [Range(0, double.MaxValue, ErrorMessage = "The value must be greater or equal to 0.")]

@@ -8,12 +8,6 @@
     <h4 style="font-weight: bold">@Html.DisplayFor(model => model.Title)</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-
-        </dt>
-
-
-
         <div class="row py-4">
             <div class="col-md-3">
                 <img src="@Url.Content(Model.ImagePath)" class="img-fluid" />
@@ -26,8 +20,15 @@
                 <p class="lh"><strong>Available for Trade: </strong> @(Model.Tradeable ? "Yes" : "No") </p>
                 <div class="lh">
                     <strong>Rating:</strong>
-                    <div class="star-ratings-sprite"><span style="width:@(Model.Rating*20)%" class="star-ratings-sprite-rating"></span></div>
-                    <span>  @Html.DisplayFor(model => model.Rating)/5</span>
+                    @if (Model.Ratings > 0)
+                    {
+                        <div class="star-ratings-sprite"><span style="width:@(Model.Rating*20)%" class="star-ratings-sprite-rating"></span></div>
+                        <span>@Html.DisplayFor(model => model.Rating)/5</span>
+                    }
+                    else
+                    {
+                        <span>No rating yet!</span>
+                    }
                 </div>
                 <br />
                 <p class="lh"><strong>Book Condition:</strong>  @Html.DisplayFor(model => model.Description)</p>
@@ -81,6 +82,17 @@
                     @Html.ActionLink("Delete", "Delete", new { id = Model.ID }, new { @class = "btn btn-block btn-danger" })
                 }
 
+                @if (!User.Identity.Name.Equals(Model.SellerEmail))
+                {
+                    <p style="font-size:25px">Rate book:</p>
+                    <div id="rate">
+                        @Html.ActionLink("1", "Rate", new { id = Model.ID, rating = 1 }, new { @class = "btn btn-outline-secondary" })
+                        @Html.ActionLink("2", "Rate", new { id = Model.ID, rating = 2 }, new { @class = "btn btn-outline-secondary" })
+                        @Html.ActionLink("3", "Rate", new { id = Model.ID, rating = 3 }, new { @class = "btn btn-outline-secondary" })
+                        @Html.ActionLink("4", "Rate", new { id = Model.ID, rating = 4 }, new { @class = "btn btn-outline-secondary" })
+                        @Html.ActionLink("5", "Rate", new { id = Model.ID, rating = 5 }, new { @class = "btn btn-outline-secondary" })
+                    </div>
+                }
             </div>
         </div>
 </div>

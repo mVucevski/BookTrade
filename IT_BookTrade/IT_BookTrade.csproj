@@ -309,6 +309,14 @@
     <Compile Include="Migrations\201809191741271_Add_Lang_Amount_Sold_Categ.Designer.cs">
       <DependentUpon>201809191741271_Add_Lang_Amount_Sold_Categ.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809231857142_ratingMigration.cs" />
+    <Compile Include="Migrations\201809231857142_ratingMigration.Designer.cs">
+      <DependentUpon>201809231857142_ratingMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809231906154_ratingMigration2.cs" />
+    <Compile Include="Migrations\201809231906154_ratingMigration2.Designer.cs">
+      <DependentUpon>201809231906154_ratingMigration2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Book.cs" />
@@ -532,6 +540,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809191741271_Add_Lang_Amount_Sold_Categ.resx">
       <DependentUpon>201809191741271_Add_Lang_Amount_Sold_Categ.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809231857142_ratingMigration.resx">
+      <DependentUpon>201809231857142_ratingMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809231906154_ratingMigration2.resx">
+      <DependentUpon>201809231906154_ratingMigration2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

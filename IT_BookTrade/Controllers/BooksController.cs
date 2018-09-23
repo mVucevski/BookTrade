@@ -482,7 +482,7 @@ namespace IT_BookTrade.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Title,ImagePath,ImageFile,Rating,BookAuthor,BookDescription,Description,Price,Tradeable,ISBN,Category,Language,Amount")] Book book)
+        public ActionResult Create([Bind(Include = "ID,Title,ImagePath,ImageFile,Ratings,RatingsSum,BookAuthor,BookDescription,Description,Price,Tradeable,ISBN,Category,Language,Amount")] Book book)
         {
             updateCartIcon();
             if (ModelState.IsValid)
@@ -539,7 +539,7 @@ namespace IT_BookTrade.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Title,ImagePath,ImageFile,Rating,BookAuthor,BookDescription,Description,Price,Tradeable,ISBN,SellerEmail,Category,Language,Amount")] Book book, string ImagePath)
+        public ActionResult Edit([Bind(Include = "ID,Title,ImagePath,ImageFile,Ratings,RatingsSum,BookAuthor,BookDescription,Description,Price,Tradeable,ISBN,SellerEmail,Category,Language,Amount")] Book book, string ImagePath)
         {
             System.Diagnostics.Debug.WriteLine("Slika " + ImagePath);
             book.ImagePath = ImagePath;
@@ -714,6 +714,31 @@ namespace IT_BookTrade.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        [Authorize]
+        public ActionResult Rate(int? id, int rating)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Book book = db.Books.Find(id);
+            if (book == null)
+            {
+                return HttpNotFound();
+            }
+
+            if (book.SellerEmail.Equals(User.Identity.Name))
+            {
+                return RedirectToAction("Index");
+            }
+
+            ++book.Ratings;
+            book.RatingsSum += rating;
+            db.SaveChanges();
+
+            return RedirectToAction("Details", new { id });
         }
     }
 }
