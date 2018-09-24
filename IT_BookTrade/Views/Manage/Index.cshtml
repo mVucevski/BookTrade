@@ -24,6 +24,18 @@
     </dl>
 
     <br />
+    <h4>Manage your trades</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dd>
+            @if (Model.HasPassword)
+            {
+                @Html.ActionLink("Trade Offers", "TradeOffers", new { }, new { @class = "btn btn-outline-secondary" })
+            }
+        </dd>
+    </dl>
+
+    <br />
     <h4>Manage your offers</h4>
     <hr />
     <dl class="dl-horizontal">
@@ -34,7 +46,7 @@
             }
         </dd>
     </dl>
-    <hr />
+    <br />
     <h4>Check Your Order</h4>
     <hr />
     <p style="font-weight:bold">Invoice ID:</p>

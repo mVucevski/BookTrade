@@ -765,5 +765,32 @@ namespace IT_BookTrade.Controllers
 
             return RedirectToAction("Details", new { id });
         }
+
+        public ActionResult TradeOffer(int id)
+        {
+            Book book = db.Books.Find(id);
+            List<Book> list = null;
+
+            if (book.Amount > 0)
+            {
+                try
+                {
+                    list = db.Books.Where(x => x.SellerEmail.Equals(User.Identity.Name) && x.Amount > 0 && x.Tradeable).ToList();
+                    list.Add(book);
+                }
+                catch (Exception ex)
+                {
+                    return View("Details", book);
+                }
+
+                if (list != null)
+                {
+                    return PartialView(list);
+                }
+            }
+
+
+            return View("Details", book);
+        }
     }
 }

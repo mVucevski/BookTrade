@@ -321,6 +321,10 @@
     <Compile Include="Migrations\201809241628055_Add_Who_Rated.Designer.cs">
       <DependentUpon>201809241628055_Add_Who_Rated.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809241738060_Add_TradeOffers.cs" />
+    <Compile Include="Migrations\201809241738060_Add_TradeOffers.Designer.cs">
+      <DependentUpon>201809241738060_Add_TradeOffers.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Book.cs" />
@@ -335,6 +339,7 @@
     <Compile Include="Models\Rated.cs" />
     <Compile Include="Models\ShoppingCart.cs" />
     <Compile Include="Models\ShoppingCartItem.cs" />
+    <Compile Include="Models\TradeOffer.cs" />
     <Compile Include="Models\Wishlist.cs" />
     <Compile Include="Models\WishlistItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -466,6 +471,8 @@
     <Content Include="Views\Chat\Inbox.cshtml" />
     <Content Include="Views\Account\AddUserToRole.cshtml" />
     <Content Include="Views\Manage\Offers.cshtml" />
+    <Content Include="Views\Manage\TradeOffers.cshtml" />
+    <Content Include="Views\Books\TradeOffer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -554,6 +561,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809241628055_Add_Who_Rated.resx">
       <DependentUpon>201809241628055_Add_Who_Rated.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809241738060_Add_TradeOffers.resx">
+      <DependentUpon>201809241738060_Add_TradeOffers.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

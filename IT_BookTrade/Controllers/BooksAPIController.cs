@@ -45,6 +45,45 @@ namespace IT_BookTrade.Controllers
 
         }
 
+        // GET: api/BooksAPI/id/id
+        [Route("api/BooksAPI/{book1}/{book2}")]
+        public IHttpActionResult GetTrade(int book1, int book2)
+        {
+            System.Diagnostics.Debug.WriteLine("book1 " + book1 + " book2 " + book2);
+
+            Book b1 = db.Books.Find(book1);
+            Book b2 = db.Books.Find(book2);
+
+            if (db.TradeOffers.Any(x => x.SendersBook.ID == book1 && x.ReceiverBook.ID == book2 && x.Respond == false))
+            {
+                return Ok();
+            }
+            else if (db.TradeOffers.Any(x => x.SendersBook.ID == book2 && x.ReceiverBook.ID == book1 && x.Respond == false))
+            {
+                return Ok();
+            }
+
+            if (!(b1.Tradeable && b2.Tradeable))
+            {
+                return Ok();
+            }
+
+            TradeOffer offer = new TradeOffer()
+            {
+                UserSender = b1.SellerEmail,
+                UserReceiver = b2.SellerEmail,
+                SendersBook = b1,
+                ReceiverBook = b2,
+                Respond = false,
+                Accepted = false
+            };
+
+            db.TradeOffers.Add(offer);
+            db.SaveChanges();
+
+            return Ok();
+        }
+
         // PUT: api/BooksAPI/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutBook(int id, Book book)

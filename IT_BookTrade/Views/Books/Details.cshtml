@@ -8,6 +8,12 @@
     <h4 style="font-weight: bold">@Html.DisplayFor(model => model.Title)</h4>
     <hr />
     <dl class="dl-horizontal">
+        <dt>
+
+        </dt>
+
+
+
         <div class="row py-4">
             <div class="col-md-3">
                 <img src="@Url.Content(Model.ImagePath)" class="img-fluid" />
@@ -37,7 +43,7 @@
                 <p>@Html.DisplayFor(model => model.BookDescription)</p>
             </div>
 
-            <div class="col-md-3" style="border:1px solid silver;border-radius:20px;height:400px;">
+            <div class="col-md-3" style="border:1px solid silver;border-radius:20px;height:500px;">
                 <strong style="color:#28a745;">Price: </strong>  <span style="color:#28a745;font-size:30px;font-weight:bold;">$@Html.DisplayFor(model => model.Price)</span>
 
                 @if (Model.Amount > 0)
@@ -63,7 +69,8 @@
                         }
                         @if (Model.Tradeable && !User.Identity.Name.Equals(Model.SellerEmail))
                         {
-                            @Html.ActionLink("Trade", "TradeContact", new { user = Model.SellerEmail }, new { @class = "btn btn-block btn-info" })
+                            @Html.ActionLink("Contact Trader", "TradeContact", new { user = Model.SellerEmail }, new { @class = "btn btn-block btn-info" })
+                            <button class="btn btn-block btn-success" onclick="myFunction()">Request Trade</button>
                         }
                     </div>
                 }
@@ -75,12 +82,13 @@
                         @Html.ActionLink("Add to Wishlist", "AddToWishlistDetails", new { id = Model.ID }, new { @class = "btn btn-block btn-danger" })
                     }
                 }
-
-                @if (User.Identity.Name.Equals(Model.SellerEmail) || User.IsInRole("Admin"))
-                {
-                    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class = "btn btn-block btn-secondary" })
-                    @Html.ActionLink("Delete", "Delete", new { id = Model.ID }, new { @class = "btn btn-block btn-danger" })
-                }
+                <div class="pt-2">
+                    @if (User.Identity.Name.Equals(Model.SellerEmail) || User.IsInRole("Admin"))
+                    {
+                        @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class = "btn btn-block btn-secondary" })
+                        @Html.ActionLink("Delete", "Delete", new { id = Model.ID }, new { @class = "btn btn-block btn-danger" })
+                    }
+                </div>
 
                 @if (!User.Identity.Name.Equals(Model.SellerEmail) && !ViewBag.Rated)
                 {
@@ -93,8 +101,14 @@
                         @Html.ActionLink("5", "Rate", new { id = Model.ID, rating = 5 }, new { @class = "btn btn-outline-secondary" })
                     </div>
                 }
+
             </div>
         </div>
 </div>
 
 
+<script>
+    function myFunction() {
+        var myWindow = window.open("@Url.Action("TradeOffer", "Books", new { id = @Model.ID })", "", "width=700,height=300");
+    }
+</script>

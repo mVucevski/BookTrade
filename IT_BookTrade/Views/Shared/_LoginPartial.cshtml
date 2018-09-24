@@ -3,28 +3,35 @@
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
-    @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-right">
-        @if (User.IsInRole("Admin"))
-        {
+        <ul class="nav navbar-nav navbar-right">
+            @if (User.IsInRole("Admin"))
+            {
+                <li class="pr-2 py-1">
+                    <i class="fa fa-cogs pr-3 navIcons add-pointer" onclick="location.href='@Url.Action("AddUserToRole", "Account")'">
+                        <strong style="font-size:15px;display:flex;">Change Roles</strong>
+                    </i>
+                </li>
+            }
+
             <li class="pr-2 py-1">
-                <i class="fa fa-cogs pr-3 navIcons add-pointer" onclick="location.href='@Url.Action("AddUserToRole", "Account")'">
-                    <strong style="font-size:15px;display:flex;">Change Roles</strong>
+                <i class="fa fa-exchange pr-3 navIcons add-pointer" onclick="location.href='@Url.Action("TradeOffers", "Manage")'">
+                    <strong style="font-size:15px;display:flex;">Trades</strong>
                 </i>
             </li>
-        }
-        <li class="pr-2 py-1">
-            <i class="fa fa-inbox pr-3 navIcons add-pointer" onclick="location.href='@Url.Action("Inbox", "Chat")'">
-                <strong style="font-size:15px;display:flex;">Inbox</strong>
-            </i>
-        </li>
-        <li class="pr-2 py-1">
-            @*@Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
-            @Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { @class = "btn btn-outline-secondary" })
-        </li>
-        <li class="pr-2 py-1"><a class="btn btn-outline-secondary" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-    </ul>
+
+            <li class="pr-2 py-1">
+                <i class="fa fa-inbox pr-3 navIcons add-pointer" onclick="location.href='@Url.Action("Inbox", "Chat")'">
+                    <strong style="font-size:15px;display:flex;">Inbox</strong>
+                </i>
+            </li>
+            <li class="pr-2 py-1">
+                @*@Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
+                @Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { @class = "btn btn-outline-secondary" })
+            </li>
+            <li class="pr-2 py-1"><a class="btn btn-outline-secondary" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+        </ul>
     }
 }
 else

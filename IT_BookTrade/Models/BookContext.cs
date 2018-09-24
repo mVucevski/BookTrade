@@ -27,6 +27,7 @@ namespace IT_BookTrade.Models
         public DbSet<Order> Order { get; set; }
         public DbSet<Chat> Chat { get; set; }
         public DbSet<Rated> Rated { get; set; }
+        public DbSet<TradeOffer> TradeOffers { get; set; }
 
         public System.Data.Entity.DbSet<IT_BookTrade.Models.Book> Books { get; set; }
 

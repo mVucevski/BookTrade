@@ -34,9 +34,9 @@ namespace IT_BookTrade.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -57,7 +57,76 @@ namespace IT_BookTrade.Controllers
         public ActionResult Offers()
         {
             updateCartIcon();
-            return View(db.Books.ToList().Where(x => x.SellerEmail.Equals(User.Identity.Name)).ToList());
+            var list = db.Books.Where(x => x.SellerEmail.Equals(User.Identity.Name));
+
+            List<Book> offers = new List<Book>();
+            if (list != null)
+            {
+                offers = list.ToList();
+            }
+            return View(offers);
+        }
+
+        // GET: /Manage/TradeOffers
+        public ActionResult TradeOffers()
+        {
+            updateCartIcon();
+            var list = db.TradeOffers.Where(x => x.UserSender.Equals(User.Identity.Name) || x.UserReceiver.Equals(User.Identity.Name));
+            List<TradeOffer> tradeoffers = new List<TradeOffer>();
+            if (list != null)
+            {
+                tradeoffers = list.ToList();
+            }
+
+            return View(tradeoffers);
+        }
+
+        //Respond
+        public ActionResult RespondOffer(string respondA, int id)
+        {
+            // System.Diagnostics.Debug.WriteLine("action " + respondA + " id " + id);
+            TradeOffer offer = db.TradeOffers.Find(id);
+            if (offer == null)
+            {
+                return RedirectToAction("Index", "Books");
+            }
+
+            if (!offer.Respond)
+            {
+
+                if (respondA.Equals("Cancel") && User.Identity.Name.Equals(offer.UserSender))
+                {
+                    db.TradeOffers.Remove(offer);
+                }
+                else if (User.Identity.Name.Equals(offer.UserReceiver))
+                {
+                    if (respondA.Equals("Decline"))
+                    {
+                        offer.Respond = true;
+                        offer.Accepted = false;
+                    }
+                    else if (respondA.Equals("Accept"))
+                    {
+                        offer.Respond = true;
+
+
+                        if (offer.SendersBook.Amount == 0 || offer.ReceiverBook.Amount == 0)
+                        {
+                            offer.Accepted = false;
+                        }
+                        else
+                        {
+                            offer.Accepted = true;
+                            offer.SendersBook.Amount -= 1;
+                            offer.ReceiverBook.Amount -= 1;
+                        }
+
+                    }
+                }
+
+                db.SaveChanges();
+            }
+            return RedirectToAction("TradeOffers");
         }
 
         //
@@ -346,6 +415,7 @@ namespace IT_BookTrade.Controllers
             base.Dispose(disposing);
         }
 
+
         private void updateCartIcon()
         {
             var userShoppingCart = db.ShoppingCart.Where(x => x.UserEmail.Equals(User.Identity.Name)).FirstOrDefault();
@@ -424,6 +494,6 @@ namespace IT_BookTrade.Controllers
             Error
         }
 
-#endregion
+        #endregion
     }
 }

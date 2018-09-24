@@ -1,0 +1,140 @@
+﻿@model IEnumerable<IT_BookTrade.Models.TradeOffer>
+
+@{
+    ViewBag.Title = "TradeOffers";
+}
+
+<h3>Incoming Trade Offers</h3>
+<table class="table">
+    <tr>
+        <th>
+            Trading with
+        </th>
+        <th>
+            Book Offered
+        </th>
+        <th>
+            For Your Book
+        </th>
+        <th>
+            Status
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        if (item.UserReceiver.Equals(User.Identity.Name))
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserSender)
+                </td>
+                <td>
+                  <a href="@Url.Action("Details", "Books", new { id = item.SendersBook.ID })" style="text-decoration:none">@Html.DisplayFor(modelItem => item.SendersBook.Title)</a>  
+                </td>
+                <td>
+                    <a href="@Url.Action("Details", "Books", new { id = item.ReceiverBook.ID })" style="text-decoration:none">@Html.DisplayFor(modelItem => item.ReceiverBook.Title)</a>
+                </td>
+                <td>
+                    @if (item.Accepted)
+                    {
+                        <div style="font-weight:bold;color:#35938b;">Accepted</div>
+                    }
+                    else
+                    {
+                        if (item.SendersBook.Amount == 0 || item.ReceiverBook.Amount == 0)
+                        {
+                            <div style="font-weight:bold;color:red;">Canceled</div>
+                        }
+                        else if (item.Respond)
+                        {
+                            <div style="font-weight:bold;color:red;">Declined</div>
+                        }
+                        else
+                        {
+                            <div style="font-weight:bold;color:#d25802;">Pending</div>
+                        }
+                    }
+                </td>
+                <td>
+                        @if (!item.Respond)
+                        {
+                            @Html.ActionLink("Accept", "RespondOffer", new { respondA = "Accept", id = item.TradeOfferId }, new { @class = "btn btn-success mx-1" })
+                            @Html.ActionLink("Decline", "RespondOffer", new { respondA = "Decline", id = item.TradeOfferId }, new { @class = "btn btn-danger" })
+                        }
+                </td>
+            </tr>
+        }
+
+    }
+
+</table>
+
+
+<br />
+
+
+<h3>Outgoing Trade Offers</h3>
+<table class="table">
+    <tr>
+        <th>
+            Trading with
+        </th>
+        <th>
+            Book Offered
+        </th>
+        <th>
+            For Your Book 
+        </th>
+        <th>
+            Status
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    if (item.UserSender.Equals(User.Identity.Name))
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserReceiver)
+        </td>
+        <td>
+            <a href="@Url.Action("Details", "Books", new { id = item.ReceiverBook.ID })" style="text-decoration:none">
+                @Html.DisplayFor(modelItem => item.ReceiverBook.Title)
+            </a>
+        </td>
+        <td>
+            <a href="@Url.Action("Details", "Books", new { id = item.SendersBook.ID })" style="text-decoration:none">
+                @Html.DisplayFor(modelItem => item.SendersBook.Title)
+            </a>
+        </td>
+        <td>
+            @if (item.Accepted)
+            {
+                <div style="font-weight:bold;color:#35938b;">Accepted</div>
+            }
+            else
+            {
+                if (item.Respond)
+                {
+                    <div style="font-weight:bold;color:red;">Declined</div>
+                }
+                else
+                {
+                    <div style="font-weight:bold;color:#d25802;">Pending</div>
+                }
+            }
+        </td>
+        <td>
+            @if (!item.Respond)
+            {
+                @Html.ActionLink("Cancel", "RespondOffer", new { respondA = "Cancel", id = item.TradeOfferId }, new { @class = "btn btn-danger" })
+            }
+        </td>
+    </tr>
+    }
+}
+</table>
