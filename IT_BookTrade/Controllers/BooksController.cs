@@ -569,7 +569,7 @@ namespace IT_BookTrade.Controllers
         }
 
         // GET: Books/Delete/5
-        /*public ActionResult Delete(int? id)
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {
@@ -588,10 +588,10 @@ namespace IT_BookTrade.Controllers
             }
 
             return RedirectToAction("Index");
-        }*/
+        }
 
         // POST: Books/Delete/5
-        /*[HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
@@ -599,7 +599,7 @@ namespace IT_BookTrade.Controllers
             db.Books.Remove(book);
             db.SaveChanges();
             return RedirectToAction("Index");
-        }*/
+        }
 
         // GET: Checkout
 

@@ -68,6 +68,11 @@ namespace IT_BookTrade.Controllers
                 return Ok();
             }
 
+            if (b1.Amount == 0 || b2.Amount == 0)
+            {
+                return Ok();
+            }
+
             TradeOffer offer = new TradeOffer()
             {
                 UserSender = b1.SellerEmail,

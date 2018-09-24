@@ -43,13 +43,13 @@
                     }
                     else
                     {
-                        if (item.SendersBook.Amount == 0 || item.ReceiverBook.Amount == 0)
+                        if (item.Respond)
+                        {
+                            <div style = "font-weight:bold;color:red;">Declined</div>
+                        }
+                        else if (item.SendersBook.Amount == 0 || item.ReceiverBook.Amount == 0)
                         {
                             <div style="font-weight:bold;color:red;">Canceled</div>
-                        }
-                        else if (item.Respond)
-                        {
-                            <div style="font-weight:bold;color:red;">Declined</div>
                         }
                         else
                         {
@@ -58,7 +58,7 @@
                     }
                 </td>
                 <td>
-                        @if (!item.Respond)
+                        @if (!item.Respond && !(item.SendersBook.Amount == 0 || item.ReceiverBook.Amount == 0))
                         {
                             @Html.ActionLink("Accept", "RespondOffer", new { respondA = "Accept", id = item.TradeOfferId }, new { @class = "btn btn-success mx-1" })
                             @Html.ActionLink("Decline", "RespondOffer", new { respondA = "Decline", id = item.TradeOfferId }, new { @class = "btn btn-danger" })
