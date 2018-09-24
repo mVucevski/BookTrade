@@ -40,7 +40,15 @@ namespace IT_BookTrade.Models
 
         public int RatingsSum { get; set; }
 
-        public double Rating { get { return (double)(Math.Round((Decimal)((double)RatingsSum/(double)Ratings),2)); } }
+        public double Rating
+        {
+            get
+            {
+                if (Ratings == 0)
+                    return -1;
+                return (double)(Math.Round((Decimal)((double)RatingsSum/(double)Ratings),2));
+            }
+        }
 
         [Required]
         [Range(0, double.MaxValue, ErrorMessage = "The value must be greater or equal to 0.")]

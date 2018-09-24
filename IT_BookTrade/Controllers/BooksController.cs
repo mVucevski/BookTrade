@@ -340,7 +340,7 @@ namespace IT_BookTrade.Controllers
         {
             updateCartIcon();
 
-            var books = db.Books.Where(x=>x.Amount>0).ToList().OrderByDescending(x=>x.BooksSold).OrderBy(x => x.Amount == 0);
+            var books = db.Books.Where(x=>x.Amount>0 && x.Ratings>0).ToList().OrderByDescending(x=>x.BooksSold).OrderByDescending(x => x.Rating);
 
             ViewBag.PageName = "Bestsellers";
             return View("Search", books);
@@ -490,6 +490,8 @@ namespace IT_BookTrade.Controllers
                 saveImage(book);
 
                 book.SellerEmail = User.Identity.Name;
+                book.Ratings = 0;
+                book.RatingsSum = 0;
                 db.Books.Add(book);
                 db.SaveChanges();
                 return RedirectToAction("Index");
