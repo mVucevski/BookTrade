@@ -92,7 +92,7 @@
 
                 @if (!User.Identity.Name.Equals(Model.SellerEmail) && !ViewBag.Rated)
                 {
-                    <p style="font-size:25px">Rate book:</p>
+                    <div class="mt-3" style="font-size:25px">Rate book:</div>
                     <div id="rate">
                         @Html.ActionLink(" ", "Rate", new { id = Model.ID, rating = 1 }, new { @class = "fa fa-star", @style = "font-size:30px;color:grey;" })
                         @Html.ActionLink(" ", "Rate", new { id = Model.ID, rating = 2 }, new { @class = "fa fa-star", @style = "font-size:30px;color:grey;" })
@@ -114,9 +114,49 @@
 
     $(document).ready(function () {
         var b1 = "#rate > a:nth-child(1)";
+        var b2 = "#rate > a:nth-child(2)";
+        var b3 = "#rate > a:nth-child(3)";
+        var b4 = "#rate > a:nth-child(4)";
+        var b5 = "#rate > a:nth-child(5)";
 
-        $(document).on("hover", b1, function () {
-            $(b1).attr("color:#39d63f");
+        
+        $(document).on("mouseenter", b1, function () {
+            $(b1).css({
+            "color": "#e7711b",
+            "text-decoration" : "none"
+            });
+        })
+
+        $(document).on("mouseenter", b2, function () {
+            $(b1 + "," + b2).css({
+                "color": "#e7711b",
+                "text-decoration": "none"
+            });
+        })
+
+        $(document).on("mouseenter", b3, function () {
+            $(b1 + "," + b2 + "," + b3).css({
+                "color": "#e7711b",
+                "text-decoration": "none"
+            });
+        })
+
+        $(document).on("mouseenter", b4, function () {
+            $(b1 + "," + b2 + "," + b3 + "," + b4).css({
+                "color": "#e7711b",
+                "text-decoration": "none"
+            });
+        })
+
+        $(document).on("mouseenter", b5, function () {
+            $(b1 + "," + b2 + "," + b3 + "," + b4 + "," + b5).css({
+                "color": "#e7711b",
+                "text-decoration": "none"
+            });
+        })
+
+        $(document).on("mouseleave", b1 + "," + b2 + "," + b3 + "," + b4 + "," + b5, function () {
+            $(b1 + "," + b2 + "," + b3 + "," + b4 + "," + b5).css("color", "grey");
         })
     });
 
