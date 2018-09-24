@@ -82,7 +82,7 @@
                     @Html.ActionLink("Delete", "Delete", new { id = Model.ID }, new { @class = "btn btn-block btn-danger" })
                 }
 
-                @if (!User.Identity.Name.Equals(Model.SellerEmail))
+                @if (!User.Identity.Name.Equals(Model.SellerEmail) && !ViewBag.Rated)
                 {
                     <p style="font-size:25px">Rate book:</p>
                     <div id="rate">

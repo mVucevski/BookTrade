@@ -464,6 +464,17 @@ namespace IT_BookTrade.Controllers
             var seller = usersDB.Users.Where(x => x.Email.Equals(book.SellerEmail)).FirstOrDefault();
             ViewBag.SellerName = seller.FirstName + " " + seller.LastName;
 
+            var rated = db.Rated.Where(x => x.BookId == id && x.User.Equals(User.Identity.Name)).FirstOrDefault();
+
+            if(rated != null)
+            {
+                ViewBag.Rated = true;
+            }
+            else
+            {
+                ViewBag.Rated = false;
+            }
+            
 
 
             return View(book);
@@ -731,10 +742,22 @@ namespace IT_BookTrade.Controllers
                 return HttpNotFound();
             }
 
+            var rated = db.Rated.Where(x => x.BookId == id && x.User.Equals(User.Identity.Name)).FirstOrDefault();
+
             if (book.SellerEmail.Equals(User.Identity.Name))
             {
                 return RedirectToAction("Index");
             }
+            if (rated != null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            db.Rated.Add(new Rated()
+            {
+                BookId = (int)id,
+                User = User.Identity.Name
+            });
 
             ++book.Ratings;
             book.RatingsSum += rating;
