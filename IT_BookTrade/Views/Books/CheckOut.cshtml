@@ -84,7 +84,7 @@
                 <div class="row mt-3">
                     <div class="col-md-12 form-group">
                         <label class="control-label"><strong>Shipping Address</strong></label>
-                        @Html.TextBoxFor(m => m.ShippingAddress, new { @class = "form-control" })
+                        @Html.TextBoxFor(m => m.ShippingAddress, new { @class = "form-control", @Value = ViewBag.ShippingAdress })
                     </div>
                 </div>
 

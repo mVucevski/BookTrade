@@ -1,27 +1,41 @@
 ﻿@model IEnumerable<IT_BookTrade.Models.Book>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "BookTrade";
 }
 
 <div class="container my-2">
 
 
-    @for (int i = 0; i < 2; i++)
+    @for (int i = 0; i < 5; i++)
     {
         var mod = Model;
         if (i == 0)
         {
-            <h3>Bestsellers</h3>
+            <h3>Bestselling Books</h3>
             //mod = Model.OrderByDescending(x => x.Rating);
-            mod = Model.Where(x => x.Ratings > 0).OrderByDescending(x => x.Rating);
+            mod = Model.OrderByDescending(x => x.BooksSold);
         }
         if (i == 1)
         {
-            <h3>Books for Trade</h3>
-            mod = Model.Where(x => x.Tradeable);
+            <h3>Highest Rated Books</h3>
+            mod = Model.OrderByDescending(x => x.Rating);
         }
-
+        if (i == 2)
+        {
+            <h3>Books for Trade</h3>
+            mod = Model.Where(x => x.Tradeable).OrderByDescending(x => x.Rating);
+        }
+        if (i == 3)
+        {
+            <h3>Most Popular Books</h3>
+            mod = Model.OrderByDescending(x => x.Ratings);
+        }
+        if (i == 4)
+        {
+            <h3>Latest Deals</h3>
+            mod = Model.Reverse();
+        }
         <hr />
         <div id="bestsellers" class="row my-3">
             @foreach (var book in mod.Take(6))
@@ -110,7 +124,7 @@
                 } else {
 
                     $.ajax({
-                        url: "/api/BooksAPI/0/" + button.attr("bookID"),
+                        url: "/api/BooksAPI/0/0/" + button.attr("bookID"),
                         method: "GET",
                         success: function () {
                             button.removeClass("btn-success");
@@ -128,7 +142,7 @@
             $(document).on("click", ".api-remove-from-cart", function () {
                 var button = $(this);
                 $.ajax({
-                    url: "/api/BooksAPI/1/" + button.attr("bookID"),
+                    url: "/api/BooksAPI/0/1/" + button.attr("bookID"),
                     method: "GET",
                     success: function () {
                         button.removeClass("btn-danger");

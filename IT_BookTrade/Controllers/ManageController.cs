@@ -54,6 +54,7 @@ namespace IT_BookTrade.Controllers
 
         //
         // GET: /Manage/Offers
+        [Authorize]
         public ActionResult Offers()
         {
             updateCartIcon();
@@ -68,6 +69,7 @@ namespace IT_BookTrade.Controllers
         }
 
         // GET: /Manage/TradeOffers
+        [Authorize]
         public ActionResult TradeOffers()
         {
             updateCartIcon();
@@ -82,6 +84,7 @@ namespace IT_BookTrade.Controllers
         }
 
         //Respond
+        [Authorize]
         public ActionResult RespondOffer(string respondA, int id)
         {
             // System.Diagnostics.Debug.WriteLine("action " + respondA + " id " + id);

@@ -25,8 +25,11 @@ namespace IT_BookTrade.Controllers
 
         // GET: api/BooksAPI/5
         [ResponseType(typeof(Book))]
-        public IHttpActionResult GetBook(int option, int id)
+        [Route("api/BooksAPI/{cart}/{option}/{id}")]
+        public IHttpActionResult GetBook(int cart, int option, int id)
         {
+
+
             Book book = db.Books.Find(id);
             if (option == 0)
             {

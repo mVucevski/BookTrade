@@ -116,6 +116,7 @@ namespace IT_BookTrade.Controllers
         }
 
         //Add to cart (If on index page) //Ova preku API i ajax
+        [Authorize]
         public ActionResult AddToCart(int? id)
         {
             if (id == null)
@@ -142,6 +143,7 @@ namespace IT_BookTrade.Controllers
         }
 
         //Add to cart (If on details page)
+        [Authorize]
         public ActionResult AddToCartDetails(int? id)
         {
             if (id == null)
@@ -240,6 +242,7 @@ namespace IT_BookTrade.Controllers
         }
 
         //Remove from cart (If on shopping cart page)
+        [Authorize]
         public ActionResult RemoveFromCart(int? id)
         {
             if (id == null)
@@ -252,6 +255,7 @@ namespace IT_BookTrade.Controllers
         }
 
         //Remove from cart (If on index page)
+        [Authorize]
         public ActionResult RemoveFromCartIndex(int? id)
         {
             if (id == null)
@@ -264,6 +268,7 @@ namespace IT_BookTrade.Controllers
         }
 
         //Remove from cart (If on details page)
+        [Authorize]
         public ActionResult RemoveFromCartDetails(int? id)
         {
             if (id == null)
@@ -295,6 +300,7 @@ namespace IT_BookTrade.Controllers
         }
 
         //Clear cart
+        [Authorize]
         public ActionResult ClearShoppingCart()
         {
             ClearCart();
@@ -306,7 +312,7 @@ namespace IT_BookTrade.Controllers
         public ActionResult Index()
         {
             updateCartIcon();
-            return View(db.Books.ToList());
+            return View(db.Books.Where(x=>x.Amount > 0).ToList());
         }
 
        
@@ -385,7 +391,7 @@ namespace IT_BookTrade.Controllers
         {
             updateCartIcon();
 
-            var books = db.Books.Where(x => x.Amount > 0 && !x.SellerEmail.Equals(User.Identity.Name) && x.Category.Contains("Fiction")).ToList();
+            var books = db.Books.Where(x => x.Category.Contains("Fiction") && !x.Category.Equals("Non-Fiction")).ToList();
 
             ViewBag.PageName = "Category Fiction";
             return View("Search", books);
@@ -396,7 +402,7 @@ namespace IT_BookTrade.Controllers
         {
             updateCartIcon();
 
-            var books = db.Books.Where(x => x.Amount > 0 && !x.SellerEmail.Equals(User.Identity.Name) && x.Category.Contains("Non-Fiction")).ToList();
+            var books = db.Books.Where(x => x.Category.Contains("Non-Fiction")).ToList();
 
             ViewBag.PageName = "Category Non-Fiction";
             return View("Search", books);
@@ -407,7 +413,7 @@ namespace IT_BookTrade.Controllers
         {
             updateCartIcon();
 
-            var books = db.Books.Where(x => x.Amount > 0 && !x.SellerEmail.Equals(User.Identity.Name) && (x.Category.Contains("Crime") || x.Category.Contains("Thriller"))).ToList();
+            var books = db.Books.Where(x => (x.Category.Contains("Crime") || x.Category.Contains("Thriller"))).ToList();
 
             ViewBag.PageName = "Category Crime & Thriller";
             return View("Search", books);
@@ -418,7 +424,7 @@ namespace IT_BookTrade.Controllers
         {
             updateCartIcon();
 
-            var books = db.Books.Where(x => x.Amount > 0 && !x.SellerEmail.Equals(User.Identity.Name) && (x.Category.Contains("Drink") || x.Category.Contains("Food") || x.Category.Contains("Cook"))).ToList();
+            var books = db.Books.Where(x => (x.Category.Contains("Drink") || x.Category.Contains("Food") || x.Category.Contains("Cook"))).ToList();
 
             ViewBag.PageName = "Category Food & Drink";
             return View("Search", books);
@@ -429,7 +435,7 @@ namespace IT_BookTrade.Controllers
         {
             updateCartIcon();
 
-            var books = db.Books.Where(x => x.Amount > 0 && !x.SellerEmail.Equals(User.Identity.Name) && x.Category.Contains("Fantasy")).ToList();
+            var books = db.Books.Where(x => x.Category.Contains("Fantasy")).ToList();
 
             ViewBag.PageName = "Category Fantasy";
             return View("Search", books);
@@ -440,7 +446,7 @@ namespace IT_BookTrade.Controllers
         {
             updateCartIcon();
 
-            var books = db.Books.Where(x => x.Amount > 0 && !x.SellerEmail.Equals(User.Identity.Name) && x.Category.Contains("History")).ToList();
+            var books = db.Books.Where(x => x.Category.Contains("History")).ToList();
 
             ViewBag.PageName = "Category History";
             return View("Search", books);
@@ -491,6 +497,7 @@ namespace IT_BookTrade.Controllers
         // POST: Books/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Title,ImagePath,ImageFile,Ratings,RatingsSum,BookAuthor,BookDescription,Description,Price,Tradeable,ISBN,Category,Language,Amount")] Book book)
@@ -524,6 +531,7 @@ namespace IT_BookTrade.Controllers
         }
 
         // GET: Books/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -550,6 +558,7 @@ namespace IT_BookTrade.Controllers
         // POST: Books/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,Title,ImagePath,ImageFile,Ratings,RatingsSum,BookAuthor,BookDescription,Description,Price,Tradeable,ISBN,SellerEmail,Category,Language,Amount")] Book book, string ImagePath)
@@ -569,6 +578,7 @@ namespace IT_BookTrade.Controllers
         }
 
         // GET: Books/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -591,6 +601,7 @@ namespace IT_BookTrade.Controllers
         }
 
         // POST: Books/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -603,13 +614,16 @@ namespace IT_BookTrade.Controllers
 
         // GET: Checkout
 
+        [Authorize]
         public ActionResult CheckOut()
         {
             updateCartIcon();
             ViewBag.TotalCostOfCart = TotalCostOfCart();
+            ViewBag.ShippingAdress = usersDB.Users.Where(x => x.Email.Equals(User.Identity.Name)).FirstOrDefault().shippingAddress;
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult CheckOut(OrderDetails checkoutDetails, string mm)
         {
@@ -676,30 +690,37 @@ namespace IT_BookTrade.Controllers
         }
 
         // GET: OrderSummary
+        [Authorize]
         public ActionResult OrderSummary(string id)
         {
-            
-            var order = db.Order.Where(p => p.UserEmail.Equals(User.Identity.Name)).First()
-                .OrdersDetails.Find(x=>x.InvoiceID.Equals(id));
-               
-           
-            //To-Do
-            //Add Total property in OrderDetails Table and Sum the prices with the discount
 
-            if (order == null)
+            var orderTmp = db.Order.Where(p => p.UserEmail.Equals(User.Identity.Name)).FirstOrDefault();
+
+
+            if (orderTmp == null)
             {
                 return RedirectToAction("Index", "Manage");
             }
             else
             {
-                ViewBag.TotalCost = order.OrderItems.Sum(x => x.BookPrice);
-                updateCartIcon();
-                return View(order);
+                var order = orderTmp.OrdersDetails.Find(x => x.InvoiceID.Equals(id));
+                if(order != null)
+                {
+                    ViewBag.TotalCost = order.OrderItems.Sum(x => x.BookPrice);
+                    updateCartIcon();
+                    return View(order);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Manage");
+                }
+                
             }
 
         }
 
         //GET: Chat (Redirect)
+        [Authorize]
         public ActionResult TradeContact(string user)
         {
             Chat tmp = db.Chat.FirstOrDefault(x => (x.User2.Equals(User.Identity.Name) && x.User1.Equals(user)) || (x.User1.Equals(User.Identity.Name) && x.User2.Equals(user)));
@@ -766,6 +787,7 @@ namespace IT_BookTrade.Controllers
             return RedirectToAction("Details", new { id });
         }
 
+        [Authorize]
         public ActionResult TradeOffer(int id)
         {
             Book book = db.Books.Find(id);

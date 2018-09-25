@@ -47,24 +47,37 @@
             @Html.DisplayFor(modelItem => item.Description)
         </td>
         <td>
-            <img height="60" src="@Url.Content(item.ImagePath)" />
+            <img height="100" src="@Url.Content(item.ImagePath)" />
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Rating)
+            @if (item.Rating < 0)
+            {
+                <div>/</div>
+                }
+            else
+            {
+                @Html.DisplayFor(modelItem => item.Rating)
+            }
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Price)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Tradeable)
+            @(item.Tradeable ? "Yes" : "No")
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.ISBN)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", "Books", new { id=item.ID }, new { }) |
-            @Html.ActionLink("Details", "Details", "Books", new { id=item.ID }, new { }) |
-            @Html.ActionLink("Delete", "Delete", "Books", new { id=item.ID }, new { })
+            <div>
+                @Html.ActionLink("Edit", "Edit", "Books", new { id = item.ID }, new { @class = "btn btn-outline-secondary", @style = "font-size:10px;" }) 
+            </div>
+            <div>
+                @Html.ActionLink("Details", "Details", "Books", new { id = item.ID }, new { @class = "btn btn-outline-secondary", @style = "font-size:10px;" })
+            </div>
+            <div>
+                @Html.ActionLink("Delete", "Delete", "Books", new { id = item.ID }, new { @class = "btn btn-outline-secondary", @style = "font-size:10px;" })
+            </div>
         </td>
     </tr>
 }

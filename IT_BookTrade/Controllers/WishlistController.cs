@@ -37,7 +37,7 @@ namespace IT_BookTrade.Controllers
             return View(wishlist);
         }
 
-       
+        [Authorize]
         public ActionResult RemoveFromWishlist(int id)
         {
             WishlistItem wishlistItem = db.Wishlist.Find(id);

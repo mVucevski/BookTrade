@@ -66,7 +66,12 @@
 {
     
     <script>
-        var lastMsgIndex = @Model.Messages.Last().ChatMessagesId;
+
+            
+
+        var lastMsgIndex = @ViewBag.lastIndex;
+
+
         function checkNewMsg( )
         {
             $.ajax({
@@ -145,14 +150,14 @@
                                 "July", "August", "September", "October", "November", "December"];
             //23-Sep-18 00:15:48
 
-            var day = date.getDate();       
-            var month = monthNames[date.getMonth()].substring(0, 3);    
-            var year = date.getFullYear();  
-            var hour = date.getHours();     
-            var minute = date.getMinutes(); 
-            var second = date.getSeconds(); 
+            var day = date.getDate();
+            var month = monthNames[date.getMonth()].substring(0, 3);
+            var year = date.getFullYear();
+            var hour = date.getHours();
+            var minute = date.getMinutes();
+            var second = date.getSeconds();
 
-            return day + "-" + month + "-" + year + " " + hour + ':' + minute + ':' + second; 
+            return day + "-" + month + "-" + year + " " + hour + ':' + minute + ':' + second;
         }
 
     </script>

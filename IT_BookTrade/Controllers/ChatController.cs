@@ -16,6 +16,7 @@ namespace IT_BookTrade.Controllers
         private ApplicationDbContext usersDB = new ApplicationDbContext();
 
         // GET: Chat
+        [Authorize]
         public ActionResult Index(int Id)
         {
             var tmp = db.Chat.FirstOrDefault(x => x.ChatId == Id);
@@ -40,6 +41,17 @@ namespace IT_BookTrade.Controllers
                 }
 
                 ViewBag.UserName = contactedUser.FirstName + " " + contactedUser.LastName;
+
+                System.Diagnostics.Debug.WriteLine("Elements: " + tmp.Messages.Count);
+                if(tmp.Messages.Count == 0)
+                {
+                    ViewBag.lastIndex = 0;
+                }
+                else
+                {
+                    ViewBag.lastIndex = tmp.Messages.Last().ChatMessagesId;
+                }
+
                 return View(tmp);
             }
             else
@@ -52,29 +64,7 @@ namespace IT_BookTrade.Controllers
         {
             return !User.Identity.Name.Equals(email);
         }
-
-        /*
-        [HttpPost]
-        public ActionResult SendMsg(int ChatId, string Msg)
-        {
-            //System.Diagnostics.Debug.WriteLine("ChatID " + ChatId);
-            //System.Diagnostics.Debug.WriteLine("Msg " + Msg);
-
-            updateCartIcon();
-            var chat = db.Chat.Find(ChatId);
-            if(chat != null)
-            {
-                chat.Messages.Add(new ChatMessages() {
-                    Message = Msg,
-                    Date = DateTime.Now,
-                    PostedBy = whoPostedFirst(chat.User1)
-                });
-                db.SaveChanges();
-            }
-
-            return RedirectToAction("Index", "Chat", new { Id = ChatId });
-        }
-        */
+        
         // GET: Inbox
         [Authorize]
         public ActionResult Inbox()

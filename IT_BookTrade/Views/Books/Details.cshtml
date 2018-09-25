@@ -66,10 +66,10 @@
                         @if (!User.Identity.Name.Equals(Model.SellerEmail))
                         {
                             @Html.ActionLink("Add to Wishlist", "AddToWishlistDetails", new { id = Model.ID }, new { @class = "btn btn-block btn-danger" })
+                            @Html.ActionLink("Contact Seller", "TradeContact", new { user = Model.SellerEmail }, new { @class = "btn btn-block btn-info" })
                         }
                         @if (Model.Tradeable && !User.Identity.Name.Equals(Model.SellerEmail))
                         {
-                            @Html.ActionLink("Contact Trader", "TradeContact", new { user = Model.SellerEmail }, new { @class = "btn btn-block btn-info" })
                             <button class="btn btn-block btn-success" onclick="myFunction()">Request Trade</button>
                         }
                     </div>
