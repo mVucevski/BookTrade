@@ -788,10 +788,22 @@ namespace IT_BookTrade.Controllers
         }
 
         [Authorize]
-        public ActionResult TradeOffer(int id)
+        public ActionResult TradeOffer(int? id)
         {
+            if (id == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+
             Book book = db.Books.Find(id);
             List<Book> list = null;
+
+            if (book == null)
+            {
+                return RedirectToAction("Index");
+            }
+
 
             if (book.Amount > 0)
             {

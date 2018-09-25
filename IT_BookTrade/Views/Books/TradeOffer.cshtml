@@ -65,11 +65,12 @@
             }
 
                 $.ajax({
-                    url: "/api/BooksAPI/" + document.getElementById("book1").value + "/" + document.getElementById("book2").value,
+                    url: "/api/BooksAPI/" + document.getElementById("kniga1").value + "/" + document.getElementById("kniga2").value,
                     method: "GET",
                     success: function () {
-                        console.log("yeee");
-                        window.close();
+                        if (!(document.getElementById("book1") == null)) {
+                            window.close();
+                        }
                     }
                 });
             
