@@ -15,11 +15,14 @@
                 </li>
             }
 
+            @if (!User.IsInRole("Admin"))
+            {
             <li class="pr-2 py-1">
                 <i class="fa fa-exchange pr-3 navIcons add-pointer" onclick="location.href='@Url.Action("TradeOffers", "Manage")'">
                     <strong style="font-size:15px;display:flex;">Trades</strong>
                 </i>
             </li>
+            }
 
             <li class="pr-2 py-1">
                 <i class="fa fa-inbox pr-3 navIcons add-pointer" onclick="location.href='@Url.Action("Inbox", "Chat")'">

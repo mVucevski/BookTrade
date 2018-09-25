@@ -45,7 +45,7 @@ namespace IT_BookTrade.Controllers
                 System.Diagnostics.Debug.WriteLine("Elements: " + tmp.Messages.Count);
                 if(tmp.Messages.Count == 0)
                 {
-                    ViewBag.lastIndex = 0;
+                    ViewBag.lastIndex = db.ChatMessages.ToList().Last().ChatMessagesId;
                 }
                 else
                 {
