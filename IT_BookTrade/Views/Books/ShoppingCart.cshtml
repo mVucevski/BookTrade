@@ -46,9 +46,12 @@
                 <img height="200" src="@Url.Content(item.Book.ImagePath)" />
             </div>
         </td>
-        <td>
-            <div class="star-ratings-sprite"><span style="width:@(item.Book.Rating*20)%" class="star-ratings-sprite-rating"></span></div>
-            <span>@item.Book.Rating/5</span>
+        <td>          
+            @if (@item.Book.Rating == -1) {
+               <span> / </span>
+            } else {
+                <span>@item.Book.Rating</span>
+            }
         </td>
         <td>
             <div class="card-text card-price">
